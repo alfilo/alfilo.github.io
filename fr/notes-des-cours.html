@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../style.css">
+<html>
+  <head>
+    <title>Notes des Cours</title>
+    <meta charset="utf-8" />
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="../script.js"></script>
+  </head>
+  <body>
+    <div class="header">
+        <img src="../menu.png" id="menu" onclick="toggleMenu()">
+        <div id="page-header">
+            <h1>Mes Notes des Cours</h1>
+            <p id="quote">"Succès n'est pas final, échec n'est pas fatal: c'est le courage à continuer qui compte."</p>
+            <!--Quote credit to https://www.uncommonquotes.com/study-quotes/-->
+            <p id="language">Lire cette site en: <a href="/course-notes.html">English</a>
+              or <a href="/es/course-notes.html">Español</a></p>
+        </div>
+        <div id="menu-links" style="display:none;">
+            <a href="index.html">Sur Moi</a><br>
+            <a href="cv.html">CV</a><br>
+            <a href="notes-des-cours.html">Notes des Cours</a><br>
+            <a href="écrits.html">Écrits</a><br>
+            <a href="recettes.html">Recettes</a><br>
+            <a href="contact.html">Contact</a><br>
+        </div>
+    </div>
+    <div id="main-page">
+        <h1>Qu'est-ce que c'est dans les notes?</h1>
+        <p>C'est sont les notes des cours qui j'ai suivi au trois colleges/universités
+            differents:  L'Université McGill, Cayuga Community College, and Tompkins
+            Cortland Community College. Je les utilise comme un outil d'étudier en
+            groupe, pour que on puisse étudier avec quelque'n qui n'a pas encore
+            suivi le cours.  C'est sont comprehensive et longue, mais ils contiennent
+            tous les informations necessaires pour réussir en les éxamens.  Quelques
+            notes sont pas complète (par exemple, si je suis en cours de suivre ce
+            cours-là), mais les notes de TC3 et CCC sont complètés.
+        </p>
+        <!-- <h3><label for="course-search">Search by course code, name, or college</label></h3>
+        <input type="search" id="course-search" name="course-search"> -->
+    </div>
+    <div id="course-columns"></div>
+    <div id="course"></div>
+    <pre id="content"></pre>
+  </body>
+</html>

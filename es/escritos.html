@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../style.css">
+<html>
+  <head>
+    <title>Escritos</title>
+    <meta charset="utf-8" />
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="../script.js"></script>
+  </head>
+  <body>
+    <div class="header">
+        <img src="../menu.png" id="menu" onclick="toggleMenu()">
+        <div id="page-header">
+            <h1>Los Escritos de Alina</h1>
+            <p id="quote">"Escribir, para mi, es simplemente pensar por mis dedos."</p>
+            <!--Quote credit to Isaac Asimov-->
+            <p id="language">Leer este sitio en: <a href="fr/course-notes.html">Français</a>
+              or <a href="course-notes.html">English</a></p>
+        </div>
+        <div id="menu-links" style="display:none;">
+            <a href="index.html">Sobre Mi</a><br>
+            <a href="cv.html">CV</a><br>
+            <a href="course-notes.html">Apuntes del Curso</a><br>
+            <a href="writings.html">Escritos</a><br>
+            <a href="recipes.html">Recetas</a><br>
+            <a href="contact.html">Contacto</a><br>
+        </div>
+    </div>
+    <div class="pwd">
+        <p>Entre la contraseña</p>
+        <input type="text" name="password" id="pwd" placeholder="Enter the password" required maxlength="200" size="20"></input><br>
+        <button id="checkpwd" onclick="handlePwd()">Chequear</button>
+    </div>
+    <div id="gdoc"></div>
+    <pre id="content"></pre>
+  </body>
+</html>

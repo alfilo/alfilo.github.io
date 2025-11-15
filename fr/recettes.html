@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../style.css">
+<html>
+  <head>
+    <title>Recettes</title>
+    <meta charset="utf-8" />
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="../script.js"></script>
+  </head>
+  <body>
+    <div class="header">
+        <img src="../menu.png" id="menu" onclick="toggleMenu()">
+        <div id="page-header">
+            <h1>Mes Recettes</h1>
+            <p id="quote">"La nourriture est symbolique de l'amour quand les mots sont inadéquates."</p>
+            <!--Quote credit to Alan D. Wolfelt-->
+            <p id="language">Lire cette site en: <a href="cv.html">English</a>
+              ou <a href="es/cv.html">Español</a></p>
+        </div>
+        <div id="menu-links" style="display:none;">
+            <a href="index.html">Sur Moi</a><br>
+            <a href="cv.html">CV</a><br>
+            <a href="notes-des-cours.html">Notes des Cours</a><br>
+            <a href="écrits.html">Écrits</a><br>
+            <a href="recettes.html">Recettes</a><br>
+            <a href="contact.html">Contact</a><br>
+        </div>
+    </div>
+    <div class="gdrive">
+        <h3>Quelqu'un avec plus de connaissance sur coding que moi ... aidez-moi ...</h3>
+        <p>Alors j'ai lit en StackOverflow que c'est un problème connu:
+          Quand on essaie d'integrer un dossier Google Drive dans un site web,
+          même si les permission de partage sont "tous les utiliseurs
+          disposant en ligne peuvent voir", il va vous donner un erreur
+          403.  J'ai plus que trente recettes en ce dossier-ci et je veux
+          pas les ajouter en séparément ou dans une liste géante, alors
+          j'espère qu'il y a un alternatif à cela.  Des idées?  Merci!</p>
+        <a href="https://drive.google.com/u/0/19K0PMtddk2v8diTVocqC-dKBL3q8M4B7?usp=sharing">Le dossier de mes recettes</a>
+          <iframe src="https://drive.google.com/u/0/19K0PMtddk2v8diTVocqC-dKBL3q8M4B7?usp=sharing" class="iframe"></iframe>
+    </div>
+    <pre id="content"></pre>
+  </body>
+</html>

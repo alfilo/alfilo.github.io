@@ -308,7 +308,7 @@ var linkArr;
 
 function handlePwd() {
     const inputPwd = $("#pwd").val();
-    if (inputPwd === "k") {
+    if (inputPwd === "dk827") {
         var gdocDiv = $("#gdoc");
         var iframe;
         for (var i = 0; i < linkArr.length; i++) {
@@ -341,8 +341,9 @@ window.onload = function() {
     }
 }
 
+var loc = window.location.href
+
 function objToHTML(obj) {
-    var loc = window.location.href
     var courseID = loc.slice(loc.length-7, loc.length)
     document.getElementById("main-page").style.display = "none";
     var h1 = $("<h1>").html(courseID.toUpperCase());
@@ -382,5 +383,20 @@ function organizeObj(response) {
                 a.wrap(ul).wrap("<li></li>");
             } else console.log("failed: " + r, response[r].semester);
         }
+    }
+}
+
+function loadHeader() {
+    var langArr, langCode, href;
+    if (loc.includes("/fr/")) langArr = ["English", "Español"]
+    else if (loc.includes("/es/")) langArr = ["English", "Français"]
+    else langArr = ["Français", "Español"]
+    var p = $("#quote").append($("<p>")).html("Read this site in:")
+    for (let l in langArr) {
+        if (l === "Español") langCode = "es/"
+        else if (l === "Français") langCode = "fr/"
+        else langCode = ""
+        href = loc.slice(0,24) + langCode + loc.slice(25, loc.length)
+        p.append($("<a>")).html(l).attr("href", href)
     }
 }

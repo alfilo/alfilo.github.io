@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../style.css">
+<html>
+  <head>
+    <title>CV</title>
+    <meta charset="utf-8" />
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="../script.js"></script>
+  </head>
+  <body>
+    <div class="header">
+        <img src="../menu.png" id="menu" onclick="toggleMenu()">
+        <div id="page-header">
+            <h1>Le CV d'Alina</h1>
+            <p id="quote">Intelligence sans ambition est un oiseau sans ailes.”</p>
+            <!--Quote credit to Walter H. Cottingham-->
+            <p id="language">Lire cette site en: <a href="../cv.html">English</a>
+              ou <a href="es/cv.html">Español</a></p>
+        </div>
+        <div id="menu-links" style="display:none;">
+            <a href="index.html">Sur Moi</a><br>
+            <a href="cv.html">CV</a><br>
+            <a href="notes-des-cours.html">Notes des Cours</a><br>
+            <a href="écrits.html">Écrits</a><br>
+            <a href="recettes.html">Recettes</a><br>
+            <a href="contact.html">Contact</a><br>
+        </div>
+    </div>
+    <div class="pdf">
+        <embed class="pdf" javascript="allow"
+            src="../alina-loginov-cv.pdf#toolbar=0&amp;navpanes=0&amp;scrollbar=0&amp;view=fitH">
+    </div>
+    <div id="gdoc"></div>
+    <pre id="content"></pre>
+  </body>
+</html>
