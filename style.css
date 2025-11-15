@@ -20,6 +20,10 @@ h1, h3, p, ul {
     position: relative;
 }
 
+.header a {
+    color: aliceblue;
+}
+
 #menu-links {
     background-color: none;
     font-family: Arial, sans-serif;
