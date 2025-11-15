@@ -304,11 +304,11 @@ function toggleMenu() {
 
 }
 
-var linkArr;
+var linkArr = ["https://docs.google.com/document/d/15DkoQkqqjwtwyqcUKQ4jupOY6JkgPTtQq5Y_pjdPjmY/edit?tab=t.0"];
 
 function handlePwd() {
-    const inputPwd = $("#pwd").val();
-    if (inputPwd === "dk827") {
+    var inputPwd = $("#pwd").val();
+    if (inputPwd == "dk827") {
         var gdocDiv = $("#gdoc");
         var iframe;
         for (var i = 0; i < linkArr.length; i++) {
@@ -322,23 +322,20 @@ function handlePwd() {
 }
 
 window.onload = function() {
-    if (window.location.href.includes("writings")) {
-        linkArr = ["https://docs.google.com/document/d/15DkoQkqqjwtwyqcUKQ4jupOY6JkgPTtQq5Y_pjdPjmY/edit?tab=t.0",
-        "https://docs.google.com/document/d/15DkoQkqqjwtwyqcUKQ4jupOY6JkgPTtQq5Y_pjdPjmY/edit?tab=t.0"];
-    } else if (window.location.href.includes("course-notes.html?courseID=")) {
+    if (window.location.href.includes("?courseID=")) {
         async function getObj() {
-            response = await (await fetch("./course-notes.json")).json();
+            response = await (await fetch("../course-notes.json")).json();
             objToHTML(response);
         }
         getObj();
-    } else if (window.location.href.includes("course-notes.html")) {
+    } else if (loc.includes("course-notes") || loc.includes("apuntes-del-curso") || loc.includes("notes-des-cours")) {
         async function getObj() {
-            response = await (await fetch("./course-notes.json")).json();
+            response = await (await fetch("../course-notes.json")).json();
             // search(response);
             organizeObj(response);
         }
         getObj();
-    }
+    } else console.log("error failed")
 }
 
 var loc = window.location.href
