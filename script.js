@@ -290,18 +290,17 @@ function addNotesToDoc(event) {
 
 function toggleMenu() {
     counter++;
-    var menu = document.getElementById("menu-links");
-    var header = document.getElementById("page-header");
+    var menu = $("#menu-links");
+    var header = $("#page-header");
     if (counter % 2 === 1) {
-        menu.style.display = "block";
-        menu.style.animation = "1s linear slide-in";
-        header.style.display = "none";
+        menu.css("display", "block");
+        menu.css("animation", "1s linear slide-in");
+        header.css("display", "none");
     } else {
-        header.style.display = "block";
-        header.style.animation = "1s linear slide-in"
-        menu.style.display = "none";
+        header.css("display", "block");
+        header.css("animation", "1s linear slide-in");
+        menu.css("display", "none");
     };
-
 }
 
 var linkArr = ["https://docs.google.com/document/d/15DkoQkqqjwtwyqcUKQ4jupOY6JkgPTtQq5Y_pjdPjmY/edit?tab=t.0"];
@@ -335,7 +334,17 @@ window.onload = function() {
             organizeObj(response);
         }
         getObj();
-    } else console.log("error failed")
+    }
+    var sections = ["language", "menu-links", "footer"];
+    $(`.${sections[0]}`).load(`load.html #${sections[0]}`,
+        function () {
+            $(`.${sections[1]}`).load(`load.html #${sections[1]}`,
+                function () {
+                    $(`.${sections[2]}`).load(`load.html #${sections[2]}`, load());
+                });
+        });
+        $(".content").height($("body").height() * 1.5);
+    }
 }
 
 var loc = window.location.href
@@ -346,8 +355,14 @@ function objToHTML(obj) {
     var h1 = $("<h1>").html(courseID.toUpperCase());
     var h3 = $("<h3>").html("Course Information")
     var p = $("<p>").html(obj[courseID].college + ", " + obj[courseID].semester + ", " + obj[courseID].format)
-    var iframe = $("<iframe>").addClass("iframe").attr("src", obj[courseID].href);
-    $("#course").append(h1).append(h3).append(p).append(iframe);
+    $("#course").append(h1).append(h3).append(p);
+    if (obj[courseID].details) {
+        var details = $("<p>").html(obj[courseID].details)
+        $("#course").append(details);
+    } else if (obj[courseID].href) {
+        var iframe = $("<iframe>").addClass("iframe").attr("src", obj[courseID].href);
+        $("#course").append(iframe);
+    }
 }
 
 function search(response) {
@@ -395,5 +410,47 @@ function loadHeader() {
         else langCode = ""
         href = loc.slice(0,24) + langCode + loc.slice(25, loc.length)
         p.append($("<a>")).html(l).attr("href", href)
+    }
+}
+
+function load() {
+    var fullLangList = ["en","fr","es"]
+    var obj = {
+        "contact" : {
+            "en" : "contact",
+            "es" : "contacto",
+            "fr" : "contact"
+        },
+        "cv" : {
+            "en" : "cv",
+            "es" : "cv",
+            "fr" : "cv"
+        },
+        "recipes" : {
+            "en" : "recipes",
+            "es" : "recetas",
+            "fr" : "recettes"
+        },
+        "index" : {
+            "en" : "index",
+            "es" : "index",
+            "fr" : "index"
+        },
+        "writings" : {
+            "en" : "writings",
+            "es" : "escritos",
+            "fr" : "écrits"
+        },
+        "course-notes" : {
+            "en" : "course-notes",
+            "es" : "apuntes-del-curso",
+            "fr" : "notes-des-cours"
+        }
+    }
+    var className = $("body").attr("class");
+    var currLang = loc.match(/\/..\//)[0];
+    var langList = fullLangList.filter(function (f) {return f != currLang;});
+    for (let l in langList) {
+        $(`.${langList[l]}`).attr("href", `../${langList[l]}/${obj[className][langList[l]]}.html`)
     }
 }

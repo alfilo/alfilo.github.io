@@ -131,5 +131,40 @@
         "semester" : "Fall 2025",
         "format" : "In-person",
         "href" : "https://docs.google.com/document/d/1C1W-duOBbUvsb-b888UTJ4JSE0eOz2GQTasIKmrvrFg/view?usp=sharing"
+    },
+    "psyc213" : {
+        "cname" : "Cognition",
+        "college" : "McGill University",
+        "semester" : "Winter 2026",
+        "format" : "In-person",
+        "href" : "https://docs.google.com/document/d/1v4bXZ_kXWEVs0MXHD36TSUuqYiEeVZjFsYuFJHS9woo/view?usp=sharing"
+    },
+    "biol201" : {
+        "cname" : "Cell Biology and Metabolism",
+        "college" : "McGill University",
+        "semester" : "Winter 2026",
+        "format" : "In-person",
+        "href" : "https://docs.google.com/document/d/1t5P2i-NeD-WcxayFBVU41Eyinfhl6FoAbeqdqsqR778/view?usp=sharing"
+    },
+    "chem222" : {
+        "cname" : "Organic Chemistry II",
+        "college" : "McGill University",
+        "semester" : "Winter 2026",
+        "format" : "In-person",
+        "href" : "https://docs.google.com/document/d/1Zj_tM_fMRwabZu3RJFgzskCtDYids2rWPuFf3NNyTWc/view?usp=sharing"
+    },
+    "nsci201" : {
+        "cname" : "Introduction to Neuroscience II",
+        "college" : "McGill University",
+        "semester" : "Winter 2026",
+        "format" : "In-person",
+        "href" : "https://docs.google.com/document/d/19F7YJTt_dx3ban-EDor3VCmpgYVY-Zd06KoQYiEmPWE/view?usp=sharing"
+    },
+    "comp204" : {
+        "cname" : "Computer Programming for Life Sciences",
+        "college" : "McGill University",
+        "semester" : "Winter 2026",
+        "format" : "In-person",
+        "details" : "My notes for this class are in the form of python files.  If you would like them please dm my instagram @aloginov25!"
     }
 }
