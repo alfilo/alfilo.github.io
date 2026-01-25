@@ -334,6 +334,19 @@ window.onload = function() {
             organizeObj(response);
         }
         getObj();
+    } else if (window.location.href.includes("?recipe=")) {
+        async function getObj() {
+            response = await (await fetch("../recipes.json")).json();
+            recipeDetails(response, );
+        }
+        getObj();
+    } else if (loc.includes("recipes") || loc.includes("recetas") || loc.includes("recettes")) {
+        async function getObj() {
+            response = await (await fetch("../recipes.json")).json();
+            // search(response);
+            organizeRecipes(response);
+        }
+        getObj();
     }
     var sections = ["language", "menu-links", "footer"];
     $(`.${sections[0]}`).load(`load.html #${sections[0]}`,
@@ -350,13 +363,13 @@ window.onload = function() {
 var loc = window.location.href
 
 function objToHTML(obj) {
-    var courseID = loc.slice(loc.length-7, loc.length)
+    var courseID = loc.slice(loc.indexOf("=") + 1, loc.length)
     document.getElementById("main-page").style.display = "none";
     var h1 = $("<h1>").html(courseID.toUpperCase());
     var h3 = $("<h3>").html("Course Information")
     var p = $("<p>").html(obj[courseID].college + ", " + obj[courseID].semester + ", " + obj[courseID].format)
     $("#course").append(h1).append(h3).append(p);
-    if (obj[courseID].details) {
+    if (obj[courseID].details && !obj[courseID].href) {
         var details = $("<p>").html(obj[courseID].details)
         $("#course").append(details);
     } else if (obj[courseID].href) {
@@ -378,10 +391,10 @@ function search(response) {
 }
 
 function organizeObj(response) {
-    var arr = ["Fall 2023", "Spring 2024", "Fall 2024", "Spring 2025", "Fall 2025", "Winter 2026"]
-    var h3, a, r, ul, className, li;
+    let arr = ["Fall 2023", "Spring 2024", "Fall 2024", "Spring 2025", "Fall 2025", "Winter 2026"]
+    let h3, a, r, ul, className;
     for (let i = 0; i < arr.length; i++) {
-        className = arr[i].toLowerCase().replace(" ", "-")
+        className = arr[i].toLowerCase().replaceAll(" ", "-")
         ul = $("<ul>").appendTo($("#course-columns"));
         ul.wrap(`<div class="${className}"></div>`);
         h3 = $("<h3>").html(arr[i]).appendTo($(`.${className}`));
@@ -395,6 +408,45 @@ function organizeObj(response) {
                 a.wrap(ul).wrap("<li></li>");
             } else console.log("failed: " + r, response[r].semester);
         }
+    }
+}
+
+function organizeRecipes(response) {
+    let arr = []
+    let mealData, mealName, className, a
+    for (let i = 0; i < Object.keys(response).length; i++) {
+        mealName = Object.keys(response)[i]
+        mealData = response[mealName]
+        className = mealData.type.toLowerCase().replaceAll(" ", "-")
+        if (!arr.includes(mealData.type)) {
+            arr.push(mealData.type)
+            $("#recipe-columns").append(
+                $("<h3>").html(`${mealData.type}`)).append(
+                    $("<ul>").addClass(className))
+        }
+        a = $("<a>").html(mealName).attr("href", `${loc}?recipe=${mealName.toLowerCase().replaceAll(" ", "-")}`)
+        $("<li>").append(a).appendTo($(`.${className}`))
+    }
+}
+
+function recipeDetails(response) {
+    let recipeID = loc.slice(loc.indexOf("=") + 1, loc.length)
+    let recipeName = recipeID.slice(0, 1).toUpperCase() + recipeID.slice(1,recipeID.length).replaceAll("-", " ")
+    $("<h3>").html(`${recipeName} recipe`).appendTo($("#recipe"))
+    $.ajax({
+        url: `../images/${recipeID}.jpg`,
+        type: "HEAD",
+        error: function() {},
+        success: function() {
+            $("<img>").attr("src", `../images/${recipeID}.jpg`)
+                .appendTo($("#recipe"))
+        }
+    })
+    if (response[recipeName].href) {
+        let iframe = $("<iframe>").addClass("iframe").attr("src", response[recipeName].href)
+        $("#recipe").append(iframe)
+    } else {
+        $("<p>").html("Recipe coming soon!").appendTo($("#recipe"))
     }
 }
 

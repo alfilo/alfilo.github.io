@@ -101,6 +101,12 @@ h1, h3, p, li {
     position: relative;
 }
 
+#recipe img {
+    width: 100%;
+    border-radius : 30px;
+    padding : 10px 0 10px 0;
+}
+
 hr { 
     background-color: darkblue;
     height: 4px;
@@ -116,11 +122,22 @@ hr {
 }
 
 @media only screen and (min-width: 500px) {
-    #course-columns {
+    #course-columns, #recipe-columns {
         column-count: 2;
         column-rule: 1px solid rgba(10,30,255,.6);
     }
 }
+@media only screen and (min-width: 800px) {
+    #recipe img {
+        width: 60%;
+        display: block;
+        margin: 0 auto 0 auto;
+    }
+}
+
+/* @media only screen and (max-width: 1300px) {
+    .content {background-attachment: scroll;}
+} */
 
 .pdf {
     width: 100%;

@@ -1,0 +1,298 @@
+{
+    "Bibimbap" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1wvRPh48Bv5ClHBNlMW8CN7fqkk6Vjhe_ZyvwJdipEDo/view?usp=sharing"
+    },
+    "Banana cookies" : {
+        "type" : "Snack",
+        "href" : "https://docs.google.com/document/d/1GCrRCa5BpFmyFDEXKZTOuHU3TelCyd27AM2oua7ATSc/view?usp=sharing"
+    },
+    "Apple pie" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1eUGm4Xt1fTRxKxILEZYVA6WVX1qMHx7kVBnQRfzfihs/view?usp=sharing"
+    },
+    "Apple cider squash mochi" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/19dGxT35tTYEllb2to-bYaPiyRPbQL35ef6lT0ApbuqU/view?usp=sharing"
+    },
+    "Ajwain noodle soup" : {
+        "type" : "Soup",
+        "href" : "https://docs.google.com/document/d/1F1ruykq9F5f6BHrVM0QiJIvwm3ZEw26fxRV9F5YbPbo/viewe?usp=sharing"
+    },
+    "Caramel cinnamon buns" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1RYDzl8gqLjXyxPteWYYiZS76Lmo_6y0ZeV76WhH7J1Q/view?usp=sharing"
+    },
+    "Cardamom cookies" : {
+        "type" : "Snack",
+        "href" : "https://docs.google.com/document/d/1BEmOblz3L521FY36ds8x0rM9UkWPtDWMcB1JPiA2VFI/view?usp=sharing"
+    },
+    "Cheese stuffed garlic bread" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1DsVJ6JiszBBVzpCu7aNBCYiaUqBE1XpCfQrA-uG2A5w/view?usp=sharing"
+    },
+    "Chicken fatteh" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1LALRCr39FWUGI3x8A7TqLRg1BfX8N39KKRbTiMdK4-s/view?usp=sharing"
+    },
+    "Chicken kabsa" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1oovW2BP2ADf4YbIwQlFVpin-MBKm_TrXb99b5QMUn_I/view?usp=sharing"
+    },
+    "Chicken mandi" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1NqjARTmVgG2UcFhT3lgcxMwREC5VIhyWwUiBdhvhdDU/view?usp=sharing"
+    },
+    "Chicken soup" : {
+        "type" : "Soup",
+        "href" : "https://docs.google.com/document/d/1BST1cEQnUk_GPYTpZ8ar8r91pp39m8Xaaeh1WYkOlJ4/view?usp=sharing"
+    },
+    "Coconut granola" : {
+        "type" : "Snack",
+        "href" : "https://docs.google.com/document/d/18LCcqB6jxrd6w_6huTDV--s2mETvFWIE71SXKMHO1kM/view?usp=sharing"
+    },
+    "Cream puffs" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/12MSLJNdnyjhpd9dddxHyUMkSJ2u2mCqR9ZAZd-uT-HQ/view?usp=sharing"
+    },
+    "Creamy egg and scallion mashed potatoes" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1BKbw3qESCdYl9MJjjw-olqx70nDseU-zV6hG20R6eFo/view?usp=sharing"
+    },
+    "Cumin quinoa patties" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1zWnEPQA6maxgYxsw_j355QZDcb4mv6v-urvOs3CGAPg/view?usp=sharing"
+    },
+    "Curry-style stuffed sweet potatoes recipe" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1ltMPH_pWtntYtoGcxiSbvFynsFPb-OU7n1bBwxDwoD0/view?usp=sharing"
+    },
+    "Date ice cream" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1eB0nixs07TjMfpNPPZVzh_SNABy5-Otog2mUFLeueTQ/view?usp=sharing"
+    },
+    "Empanadas colombianas" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1W9mRTb3iEF3l931M3cTNG-rxbFD2W09dU8FuVDKiyPY/view?usp=sharing"
+    },
+    "Enchiladas" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1j7fQS9yVHUkbw46DlTzat8Ht7v6u7_Wuj9xijV5VOJY/view?usp=sharing"
+    },
+    "Five spice teriyaki eggplant rice" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1kI1h_-YOdRqRXVCQrfcTgWiQRwPfZynEFDU7UIZcih8/view?usp=sharing"
+    },
+    "Galangal ginger chicken with roast veggies" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1yf8efPLcgukw239gqVqBUi_xVLrrKrWyUEQTMNywTco/view?usp=sharing"
+    },
+    "Greek lemon chicken" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1e_jJzwjvY8FPjwSc0AOKXJYREMD-iOGQ23RdtfzGpQs/view?usp=sharing"
+    },
+    "Habichuelas con dulce" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/16OVhBnSEtp1hk4fqhajOYc6Xno2ku-rh53Caaf6Z8Ew/view?usp=sharing"
+    },
+    "Harira" : {
+        "type" : "Soup",
+        "href" : "https://docs.google.com/document/d/1pQBXoFzIYZYOGT_3c81QoKIF4Vl2jPhRS09qXuXG_0g/view?usp=sharing"
+    },
+    "Homemade pasta sauce" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1EYlFDq9mLR_KIhxZlk-qPC8OQ3oFZ0eNTXK0RBcKtEQ/view?usp=sharing"
+    },
+    "Japchae" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/13QsnHAQVPWrJohc1DSZMLN4y9dMAV-1Rq_zSPfsRCjE/view?usp=sharing"
+    },
+    "Kung pao chicken" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/10PtelbrXIMe8QUeAkTtytKYVzY0DtrLR27OijUqn0j0/view?usp=sharing"
+    },
+    "Lasagna" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/17l2-BTJxBYNTveW8jGwoV98bXtfh2i-SKrP7_6y_t1U/view?usp=sharing"
+    },
+    "Lauki curry" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1zM1BBclMOBOu2UgIzhYLEU2QfizK4ru0keZhBE79Dg0/view?usp=sharing"
+    },
+    "Lebanese seven spice chicken" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1bkX-ZOVDedYQQ3cXp2OZkIn2c0U_mng0PioIE_u4Kc0/view?usp=sharing"
+    },
+    "Macaroni and cheese" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1flxfFhs2mYg9GubtsuxCSfq_7VCpPC8hbfJcginHPGY/view?usp=sharing"
+    },
+    "Lamb mansaf" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/19URillqo8SSEfflEhGiH3lyngJG_Tj6RuLViVtSvDxY/view?usp=sharing"
+    },
+    "Mild root veggie curry" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1TEKrQ5TMlIMThZvpz7wv0r2FmfTGd6V-Okz6X8SXKkY/view?usp=sharing"
+    },
+    "Miso soup" : {
+        "type" : "Soup",
+        "href" : "https://docs.google.com/document/d/1y0fChxJgsdHLLI-3IxCmdfIVtbgmrTdLq99kqbLu3NM/view?usp=sharing"
+    },
+    "Noodles with potato vegetables and mozzarella" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1AfXH0LjYnX8b8eUZ4jgF-y4ttALnCweJB-ZAkV1gOYw/view?usp=sharing"
+    },
+    "Oatmeal cookie shortbread" : {
+        "type" : "Snack",
+        "href" : "https://docs.google.com/document/d/147BPobPZL3XhiU-ubIxRsl44ChkS5yhdqX_dnGsql2o/view?usp=sharing"
+    },
+    "Once baked potatoes" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1Vz0hwi6PEbzVgngHawTYbBj_21r213tTlrcc6GMptZM/view?usp=sharing"
+    },
+    "Oven grilled tom yum chicken" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1vOrvzUPWizbJQlPxftAjcg3hOm4VYMvxXNC6o0bnbcw/view?usp=sharing"
+    },
+    "Panlasang pinoy special pancit canton" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1I9J7Xb4qdG2K1Y8E0Ckp5JYYqknynQCw3YE7n2dl62I/view?usp=sharing"
+    },
+    "Plum chutney" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1Tl4mcuxwHSqcQLrxz5J4b_pgeLuUkxYT1KzJ9ekcRYk/view?usp=sharing"
+    },
+    "Quinoa fruit salad" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1Z4_0CAwhRtUUpFWGcU_wqVYOOmXSiPsUIH76EDFs288/view?usp=sharing"
+    },
+    "Refried bean enchiladas" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1EjlGjZhXmUYe-pr27vFhVthdrY8tSRkDzKIH3OSsmWM/view?usp=sharing"
+    },
+    "Roasted miso murasaki sweet potatoes" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1l0CXUbVv6wP-3ppCyuKpWhVnzO89wtHoqBpFEwk5iqE/view?usp=sharing"
+    },
+    "Roasted tamarind chicken breasts" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1ZtE6NPSpV7a2GvmHJHbntJxC45Bv2U_Mr8AKXrJ6B4s/view?usp=sharing"
+    },
+    "Sancocho" : {
+        "type" : "Soup",
+        "href" : "https://docs.google.com/document/d/1PpKC6dIQ1FbXbcXvVCUJ42DJZzk9yGrlSuUuIf9QkXg/view?usp=sharing"
+    },
+    "Savory tang yuan (glutinous rice ball soup)" : {
+        "type" : "Soup",
+        "href" : "https://docs.google.com/document/d/1fFsguKSx0TkzN84f09n_OIxCQzVdxd4yyQDb5fFHcqw/view?usp=sharing"
+    },
+    "Shakshouka" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1cJ3STf47HsjuHBOK9bgrwZ4VEZgbpwSYXp3eo2itzqc/view?usp=sharing"
+    },
+    "Shrimp mac and cheese" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/12-R03jfjZ4NtEtHtR02M2Ja8Q-0vrqXbLYxewHyKHXY/view?usp=sharing"
+    },
+    "Satanghon with chayote" : {
+        "type" : "Soup",
+        "href" : "https://docs.google.com/document/d/1FGd7Zr5lasMEHPYXsU3ZukgRxdGJEwrQGxcjNoCLgHA/view?usp=sharing"
+    },
+    "Southwest chicken soup" : {
+        "type" : "Soup",
+        "href" : "https://docs.google.com/document/d/110vXqlM6mEFTAc-9UsyIPqrqO4AKJoiNqTbOy6p3zZc/view?usp=sharing"
+    },
+    "Steamed char siu bao pork buns" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/15kjfQiViGM-XVMJFxEH6d207YQDYhgfK9l_AbZco-tA/view?usp=sharing"
+    },
+    "Steamed scallion buns" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1Tmx2OvlXYWpNX9WtxGQzX0ERl9sm6I3Wf6fOm5RxPxY/view?usp=sharing"
+    },
+    "Steamed ube buns" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1PtLfDFglLyDvUWH_9UbbrRDFkyX_G_zvqhiMe2HiFeU/view?usp=sharing"
+    },
+    "Stuffed mushrooms" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1aHmo2v5aC2hZySKXZb_7nFPiFIeuMGGIncQJZ076E1s/view?usp=sharing"
+    },
+    "Sweet potato balls" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1fPRj_Rb_JARlX_3psHl8AS_E_--inDEEy1JbwVirxf0/view?usp=sharing"
+    },
+    "Sweet potato swirl bread" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1aablLTesmhFKf1PdMq4UeKQkoLNGKFlcpSQl4LEDf_M/view?usp=sharing"
+    },
+    "Sweet taro buns" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1qzmswt910CVi_8Pvi9dsRbf-VDO0QAPYm5c1A8paNbo/view?usp=sharing"
+    },
+    "Tabbouleh" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1XtPswhZI5JCDU6419P9BBjaCqX8irWuVnaefMQkbXzQ/view?usp=sharing"
+    },
+    "Tamarind chicken and japanese sweet potatoes" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1lbrjW3fkof5NRCAuazFxGjndvCdLu9MmeuzZnK57hok/view?usp=sharing"
+    },
+    "Tamarind lemongrass rockfish" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1FzyJEOu8wFFScu3jl1UL7BJzXsGWv4s6r2xG271Wv_c/view?usp=sharing"
+    },
+    "Tapioca buns" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/167wkSKm_Sx0Y_0wvuyIx3ezZ70WYPcqLVsHqhQw0J2g/view?usp=sharing"
+    },
+    "Taro rice" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1RFz3FnfsAdTiWLEekbQbm-JT9At03AODbpq-CY_vJxE/view?usp=sharing"
+    },
+    "Taro rolls" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1DILSqQ0oDJdK1iNrb4H49duim9kqteYu6hcvR7eJ23E/view?usp=sharing"
+    },
+    "Teff custard apple pie" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1Vd9mryyXF2mrDdgZSvnp9LsoG-cYUgv_Xov6nMpWaow/view?usp=sharing"
+    },
+    "Things to do with salmon" : {
+        "type" : "Tips",
+        "href" : "https://docs.google.com/document/d/15Tq0ELeNNcK8va-dpgjenRniTyDGLz2KSW607PcHLe8/view?usp=sharing"
+    },
+    "Tom yum chicken" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1YzojwMZuv49_Yb_TJ0wxLbub1mYwvVAl0wF19FcKJcc/view?usp=sharing"
+    },
+    "Turkey burgers" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1mmF_kp30v0WekbyaJRAPTktotBSonVMwCKhLlZCF6NM/view?usp=sharing"
+    },
+    "Ube halaya butter mochi" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1Ih6ZNI0Z2eeWmoQ3fQp_CWv-zKE6uFEiQFs20P8NR7k/view?usp=sharing"
+    },
+    "Ube halaya" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1j64BXOcab_oQ1nK8vncQsTyQ2YwrZ38mjxzkIyoxpAo/view?usp=sharing"
+    },
+    "Vanilla custard" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/16F4-Fb92oUIz_CMu_UPjZrwV_VxgyYOOHr5-yOkqZlc/view?usp=sharing"
+    },
+    "Vegetarian japanese curry" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1-W4yW5wYpcvkk5f3WtnnyW6Hnas693cliSF6XEWyHqQ/view?usp=sharing"
+    },
+    "Veggie cheese pasta" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1vGGFYG36pyzwZHEqNgYq8GUHRT5WRoEuSNIFRBbm00M/view?usp=sharing"
+    },
+    "Teriyaki salmon bowl" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1cYfAMsKrCMRb9zfhqWMKM-nahxToyCHggM-aTPfu9CI/view?usp=sharing"
+    }
+}
