@@ -357,7 +357,6 @@ window.onload = function() {
                 });
         });
         $(".content").height($("body").height() * 1.5);
-    }
 }
 
 var loc = window.location.href
