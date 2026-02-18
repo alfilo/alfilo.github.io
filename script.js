@@ -321,7 +321,7 @@ function handlePwd() {
 }
 
 window.onload = function() {
-    if (window.location.href.includes("?courseID=")) {
+    if (loc.includes("?courseID=")) {
         async function getObj() {
             response = await (await fetch("../course-notes.json")).json();
             objToHTML(response);
@@ -334,10 +334,10 @@ window.onload = function() {
             organizeObj(response);
         }
         getObj();
-    } else if (window.location.href.includes("?recipe=")) {
+    } else if (loc.includes("?recipe=")) {
         async function getObj() {
             response = await (await fetch("../recipes.json")).json();
-            recipeDetails(response, );
+        recipeDetails(response);
         }
         getObj();
     } else if (loc.includes("recipes") || loc.includes("recetas") || loc.includes("recettes")) {
@@ -345,8 +345,26 @@ window.onload = function() {
             response = await (await fetch("../recipes.json")).json();
             // search(response);
             organizeRecipes(response);
+       let imgArr = ["apple-cider-squash-mochi", "cheese-stuffed-garlic-bread", "chicken-soup",
+        "chocolate-raspberry-cheesecake", "creamy-egg-and-scallion-mashed-potatoes", "enchiladas",
+        "five-spice-teriyaki-eggplant-rice", "homemade-pasta-sauce", "mild-root-veggie-curry",
+        "miso-soup", "noodles-with-potato-vegetables-and-mozarella", "once-baked-potatoes",
+        "quinoa-fruit-salad", "refried-bean-enchiladas", "shrimp-mac-and-cheese", "southwest-chicken-soup",
+        "stuffed-mushrooms", "sweet-potato-swirl-bread", "tamarind-chicken-and-japanese-sweet-potatoes",
+        "tamarind-lemongrass-rockfish", "teriyaki-salmon-bowl", "turkey-burgers", "things-to-do-with-salmon",
+        "vanilla-custard", "veggie-cheese-pasta"]
+        $("#footer").before($("<div id='gallery'></div>"))
+        gallery(imgArr, $('#gallery'), '/images/recipes', true);
         }
         getObj();
+    } else if (loc.includes("index")) {
+        let imgArr = ["kitty-in-ash", "montreal-botanical-flowers", "dairy-show", "arches",
+            "upside-down-kitty", "chicago", "lake-superior-rocks", "kitty-paws", "lake-superior-flowers",
+            "red-dress", "montreal", "kitty-chair", "montreal-botanical", "st-patrick",
+            "parc-des-rapides", "canoeing", "le-balcon", "wolf-puzzle", "squash",
+            "the-slough", "kitty-closeup"];
+        $("#footer").before($("<div id='gallery'></div>"))
+        gallery(imgArr, $('#gallery'), '/images/index-gallery', false);
     }
     var sections = ["language", "menu-links", "footer"];
     $(`.${sections[0]}`).load(`load.html #${sections[0]}`,
@@ -356,7 +374,42 @@ window.onload = function() {
                     $(`.${sections[2]}`).load(`load.html #${sections[2]}`, load());
                 });
         });
-        $(".content").height($("body").height() * 1.5);
+function gallery(imgArr, gallery, directory, links) {
+    let img
+    for (let i = 0; i < imgArr.length; i++) {
+        img = $("<img>")
+            .prop("src", `${directory}/${imgArr[i]}.jpg`)
+            .prop("class", "gallery")
+            .appendTo(gallery)
+            .hide()
+        if (links) img.wrap($("<a>").prop("href", `${loc}?recipe=${imgArr[i]}`))
+    }
+    let counter = 0
+    let top = gallery.offset().top - 10
+    $($(".gallery")[counter]).show();
+    $("<button id='previous'>").appendTo(gallery).text("Previous")
+        .offset({top: top, left: gallery.offset().left + 10})
+        .css('border-radius', '4px 10px')
+        .on("click", () => {
+            $($(".gallery")[counter]).hide()
+            $($(".gallery")[counter - 1]).show("slide", {direction: "left" }, 500)
+            if (counter > 0) counter--
+            else counter += imgArr.length
+        })
+    $("<button id='next'>").appendTo(gallery).text("Next")
+        .offset({top: top, left: $(window).width() - $("button").width() - 10})
+        .css('border-radius', '10px 4px')
+        .on("click", () => {
+            $($(".gallery")[counter]).hide()
+            $($(".gallery")[counter + 1]).show("slide", {direction: "right" }, 500)
+            if (counter < imgArr.length - 1) counter++
+            else counter -= imgArr.length
+        })
+    $(window).on("resize", () => {
+        console.log('resized')
+        $("#next").offset({left: $(window).width() - $("button").width() - 10})
+    })
+}
 }
 
 var loc = window.location.href
@@ -401,7 +454,7 @@ function organizeObj(response) {
             r = Object.keys(response)[j].toString();
             if (response[r].semester == arr[i]) {
                 console.log("passed " + r, response[r].semester)
-                a = $("<a>").attr("href", window.location.href + "?courseID=" + r)
+                a = $("<a>").attr("href", loc + "?courseID=" + r)
                     .html(response[r].cname)
                     .appendTo($(`.${className}`));
                 a.wrap(ul).wrap("<li></li>");

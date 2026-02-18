@@ -294,5 +294,18 @@
     "Teriyaki salmon bowl" : {
         "type" : "Main meal",
         "href" : "https://docs.google.com/document/d/1cYfAMsKrCMRb9zfhqWMKM-nahxToyCHggM-aTPfu9CI/view?usp=sharing"
+    },
+    "Chocolate raspberry cheesecake" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1yNL2oKPBt58Dfv0ZxkTMBGooxhm4sekakZC9sPWjxhw/view?usp=sharing"
+    },
+    "Baked curry squash" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1f9onh-eILozEXuLX6twyVabcSD4JRY8ilEh2uLNaqko/view?usp=sharing"
+    }
+    ,
+    "Curry chicken rice" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/11jAMjomwOyv6j3QODiO4Sb0robfuIkWUfxlPCNnGtTY/view?usp=sharing"
     }
 }
