@@ -49,8 +49,8 @@ function isChrome() {
 window.onload = function() {
     let num, div
     let obj = {2025: 30, 2026: 0}
-    let count = obj[window.location.href.slice(window.location.href.length-9, window.location.href.length-5)]
-    // $("body").append($("<div class='flipbook'>").wrap($("<div class='container'>")).wrap($("<div class='flipbook-viewport'>")))
+    let year = window.location.href.slice(window.location.href.length-9, window.location.href.length-5)
+    let count = obj[year]
     for (let i = 0; i < count-1; i++) {
         if (i < 9) num = "0" + `${i+1}`
         else num = (i+1).toString()
