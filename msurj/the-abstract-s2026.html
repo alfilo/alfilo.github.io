@@ -1,8 +1,4 @@
-import os
-import re
-from bs4 import BeautifulSoup as Soup
 
-template = """
 <!DOCTYPE html>
 <link rel="stylesheet" href="msurj.css">
 <html>
@@ -26,13 +22,3 @@ template = """
 </div>
 </body>
 </html>
-"""
-
-soup = Soup(template, features='html.parser')
-
-for folder in os.scandir('../msurj/pages'):
-    if folder.is_dir() and bool(re.search('\d{4}', folder.name)):
-        # _, _, files = next(os.walk(folder))
-        html = open(f'{folder.name}.html', 'w')
-        html.write(template)
-        html.close()

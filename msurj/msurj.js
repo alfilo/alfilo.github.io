@@ -48,8 +48,8 @@ function isChrome() {
 
 window.onload = function() {
     let num, div
-    let obj = {2025: 30, 2026: 0}
-    let year = window.location.href.slice(window.location.href.length-9, window.location.href.length-5)
+    let obj = {'f2025': 30, 's2026': 44}
+    let year = window.location.href.slice(window.location.href.length-10, window.location.href.length-5)
     let count = obj[year]
     for (let i = 0; i < count-1; i++) {
         if (i < 9) num = "0" + `${i+1}`
