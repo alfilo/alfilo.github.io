@@ -322,49 +322,35 @@ function handlePwd() {
 
 window.onload = function() {
     if (loc.includes("?courseID=")) {
-        async function getObj() {
-            response = await (await fetch("../course-notes.json")).json();
-            objToHTML(response);
-        }
-        getObj();
+      async function getObj() {
+        response = await (await fetch("../course-notes.json")).json();
+        objToHTML(response);
+      }
+      getObj();
     } else if (loc.includes("course-notes") || loc.includes("apuntes-del-curso") || loc.includes("notes-des-cours")) {
-        async function getObj() {
-            response = await (await fetch("../course-notes.json")).json();
-            // search(response);
-            organizeObj(response);
-        }
-        getObj();
+      async function getObj() {
+        response = await (await fetch("../course-notes.json")).json();
+        // search(response);
+        organizeObj(response);
+      }
+      getObj();
     } else if (loc.includes("?recipe=")) {
-        async function getObj() {
-            response = await (await fetch("../recipes.json")).json();
+      async function getObj() {
+        response = await (await fetch("../recipes.json")).json();
         recipeDetails(response);
-        }
-        getObj();
+      }
+      getObj();
     } else if (loc.includes("recipes") || loc.includes("recetas") || loc.includes("recettes")) {
-        async function getObj() {
-            response = await (await fetch("../recipes.json")).json();
-            // search(response);
-            organizeRecipes(response);
-       let imgArr = ["apple-cider-squash-mochi", "cheese-stuffed-garlic-bread", "chicken-soup",
-        "chocolate-raspberry-cheesecake", "creamy-egg-and-scallion-mashed-potatoes", "enchiladas",
-        "five-spice-teriyaki-eggplant-rice", "homemade-pasta-sauce", "mild-root-veggie-curry",
-        "miso-soup", "noodles-with-potato-vegetables-and-mozarella", "once-baked-potatoes",
-        "quinoa-fruit-salad", "refried-bean-enchiladas", "shrimp-mac-and-cheese", "southwest-chicken-soup",
-        "stuffed-mushrooms", "sweet-potato-swirl-bread", "tamarind-chicken-and-japanese-sweet-potatoes",
-        "tamarind-lemongrass-rockfish", "teriyaki-salmon-bowl", "turkey-burgers", "things-to-do-with-salmon",
-        "vanilla-custard", "veggie-cheese-pasta"]
-        $("#footer").before($("<div id='gallery'></div>"))
-        gallery(imgArr, $('#gallery'), '/images/recipes', true);
-        }
-        getObj();
+      async function getObj() {
+        response = await (await fetch("../recipes.json")).json();
+        // search(response);
+        organizeRecipes(response);
+      }
+      getObj();
     } else if (loc.includes("index")) {
-        let imgArr = ["kitty-in-ash", "montreal-botanical-flowers", "dairy-show", "arches",
-            "upside-down-kitty", "chicago", "lake-superior-rocks", "kitty-paws", "lake-superior-flowers",
-            "red-dress", "montreal", "kitty-chair", "montreal-botanical", "st-patrick",
-            "parc-des-rapides", "canoeing", "le-balcon", "wolf-puzzle", "squash",
-            "the-slough", "kitty-closeup"];
+        let files = findFiles('/images/index-gallery')
         $("#footer").before($("<div id='gallery'></div>"))
-        gallery(imgArr, $('#gallery'), '/images/index-gallery', false);
+        gallery(files, $('#gallery'), false);
     }
     var sections = ["language", "menu-links", "footer"];
     $(`.${sections[0]}`).load(`load.html #${sections[0]}`,
@@ -373,12 +359,14 @@ window.onload = function() {
                 function () {
                     $(`.${sections[2]}`).load(`load.html #${sections[2]}`, load());
                 });
-        });
-function gallery(imgArr, gallery, directory, links) {
+    });
+}
+
+function gallery(imgArr, gallery, links = false) {
     let img
     for (let i = 0; i < imgArr.length; i++) {
         img = $("<img>")
-            .prop("src", `${directory}/${imgArr[i]}.jpg`)
+            .prop("src", `../${imgArr[i]}`)
             .prop("class", "gallery")
             .appendTo(gallery)
             .hide()
@@ -406,12 +394,20 @@ function gallery(imgArr, gallery, directory, links) {
             else counter -= imgArr.length
         })
     $(window).on("resize", () => {
-        console.log('resized')
         $("#next").offset({left: $(window).width() - $("button").width() - 10})
     })
 }
-}
 
+function scroll() {
+    var scroller = document.getElementsByClassName("content");
+    var ratio = .25;
+    var target = scroller.scrollTop + event.deltaY * ratio;
+    scroller.scrollTo({
+        top: target,
+        behavior: "smooth"
+    });
+}
+    
 var loc = window.location.href
 
 function objToHTML(obj) {
@@ -453,12 +449,11 @@ function organizeObj(response) {
         for (let j = 0; j < Object.keys(response).length; j++) {
             r = Object.keys(response)[j].toString();
             if (response[r].semester == arr[i]) {
-                console.log("passed " + r, response[r].semester)
                 a = $("<a>").attr("href", loc + "?courseID=" + r)
                     .html(response[r].cname)
                     .appendTo($(`.${className}`));
                 a.wrap(ul).wrap("<li></li>");
-            } else console.log("failed: " + r, response[r].semester);
+            }
         }
     }
 }
@@ -472,13 +467,53 @@ function organizeRecipes(response) {
         className = mealData.type.toLowerCase().replaceAll(" ", "-")
         if (!arr.includes(mealData.type)) {
             arr.push(mealData.type)
-            $("#recipe-columns").append(
-                $("<h3>").html(`${mealData.type}`)).append(
-                    $("<ul>").addClass(className))
+            let galleryDiv = $(`<div id='${className}-gallery'>`)
+            $("#recipe-columns").append(galleryDiv)
+            galleryDiv.prepend($("<ul>").addClass(className))
+                .prepend($("<h3>").html(`${mealData.type}`))
+            recipeGallery(response, galleryDiv, mealData.type)
         }
         a = $("<a>").html(mealName).attr("href", `${loc}?recipe=${mealName.toLowerCase().replaceAll(" ", "-")}`)
         $("<li>").append(a).appendTo($(`.${className}`))
     }
+}
+
+function recipeGallery(response, div, mealType) {
+    if (!mealType) return
+    
+    let arr = []
+    let files = findFiles('/images/recipes')
+    
+    let recipeIDs = Object.keys(response)
+    for (let i = 0; i < recipeIDs.length; i++) {
+        if (response[recipeIDs[i]].type !== mealType) continue
+        let recipeID = recipeIDs[i].toLowerCase().split(' ').join('-')
+        for (let j = 0; j < files.length; j++) {
+            if (files[j].includes(recipeID)) {
+                arr.push(files[j])
+                files.splice(j, 1)
+            }
+        }
+    }
+    if (arr.length) gallery(arr, div, true);
+}
+
+function findFiles(path) {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', path, false)
+    xhr.send()
+    let htmlResponse, links
+    let files = []
+    if (xhr.status === 200) {
+        const parser = new DOMParser()
+        htmlResponse = parser.parseFromString(xhr.responseText, 'text/html')
+        links = htmlResponse.getElementsByTagName('a')
+        for (let i =0; i < links.length; i++) {
+            let fileName = links[i].getAttribute('href')
+            if (fileName.includes('jpg')) files.push(fileName)
+            }
+    }
+    return files
 }
 
 function recipeDetails(response) {
