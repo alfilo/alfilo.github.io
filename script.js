@@ -1,595 +1,370 @@
-"use strict";
+"use strict"
 
-// Array of API discovery doc URLs for APIs used by the quickstart
-var DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
-    'https://docs.googleapis.com/$discovery/rest?version=v1'];
-
-// Authorization scopes required by the API; multiple scopes can be
-// included, separated by spaces.
-var SCOPES = 'https://www.googleapis.com/auth/drive.file';
-
-// The title and ID of the notes document
-var DOC_TITLE = 'Note Maker Notes';
-var documentId;
-
-var authorizeButton = document.getElementById('authorize-button');
-var signoutButton = document.getElementById('signout-button');
-var urlForm = document.getElementById('url-form');
-var keyForm = document.getElementById('key-form');
-
-var counter = 0;
-var response;
-//keyForm.style.display = 'none';  // Begin with keyForm hidden
-
-/**
- *  On load, displays keyForm.
- */
-//function handleClientLoad() {
-//    keyForm.style.display = 'block';
-//}
-
-/**
- *  On keyForm submit, calls initCient to
- *  load the auth2 library and API client library.
- */
-function handleKeys(event) {
-    event.preventDefault();  // Don't submit the form
-    gapi.load('client:auth2', initClient);
-}
-
-/**
- *  Initialize the API client library and sets up sign-in state listeners.
- */
-function initClient() {
-    gapi.client.init({
-        apiKey: keyForm['api-key'].value,
-        clientId: keyForm['client-id'].value,
-        discoveryDocs: DISCOVERY_DOCS,
-        scope: SCOPES
-    }).then(function () {
-        // Listen for sign-in state changes.
-        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-        // Handle the initial sign-in state.
-        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-        authorizeButton.onclick = handleAuthClick;
-        signoutButton.onclick = handleSignoutClick;
-        keyForm.style.display = 'none';
-    }, function (error) {
-        appendPre(JSON.stringify(error, null, 2));
-    });
-}
-
-/**
- *  Called when the signed in status changes, to update the UI
- *  appropriately. After a sign-in, the API is called.
- */
-function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
-        authorizeButton.style.display = 'none';
-        signoutButton.style.display = 'block';
-        findOrCreateDoc(DOC_TITLE);
-    } else {
-        authorizeButton.style.display = 'block';
-        signoutButton.style.display = 'none';
-        urlForm.style.display = 'none';
-    }
-}
-
-/**
- *  Sign in the user upon button click.
- */
-function handleAuthClick(event) {
-    gapi.auth2.getAuthInstance().signIn();
-}
-
-/**
- *  Sign out the user upon button click.
- */
-function handleSignoutClick(event) {
-    gapi.auth2.getAuthInstance().signOut();
-}
-
-/**
- * Append a pre element to the body containing the given message
- * as its text node. Used to display the results of the API call.
- *
- * @param {string} message Text to be placed in pre element.
- */
-function appendPre(message) {
-    var pre = document.getElementById('content');
-    var textContent = document.createTextNode(message + '\n');
-    pre.appendChild(textContent);
-}
-
-/**
- * Print names and IDs of each document in files.
- */
-function printDocInfo(files) {
-    if (files && files.length) {
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            appendPre(`ID: ${file.id} ("${file.name}")`);
-        }
-    } else {
-        appendPre('No matching documents found.');
-    }
-}
-
-/**
- * Find all documents with given title.
- */
-function findDocs(title) {
-    return new Promise(function (resolve, reject) {
-        var retrievePageOfFiles = function (promise, answer) {
-            promise.then(function (response) {
-                answer = answer.concat(response.result.files);
-                var nextPageToken = response.result.nextPageToken;
-                if (nextPageToken) {
-                    promise = gapi.client.drive.files.list({
-                        pageToken: nextPageToken,
-                        q: `name = '${title}' and trashed = false`,
-                        pageSize: 10,
-                        fields: 'nextPageToken, files(id, name)'
-                    });
-                    retrievePageOfFiles(promise, answer);
-                } else {
-                    resolve(answer);
-                }
-            }), function (response) {
-                appendPre('Error (list): ' + response.result.error.message);
-            };
-        }
-        var initialPromise = gapi.client.drive.files.list({
-            q: `name = '${title}' and trashed = false`,
-            pageSize: 10,
-            fields: 'nextPageToken, files(id, name)'
-        });
-        retrievePageOfFiles(initialPromise, []);
-    });
-}
-
-/**
- * Create a new document with given title.
- */
-function createDoc(title) {
-    return gapi.client.docs.documents.create({
-        title: title
-    }).then(function (response) {
-        var doc = response.result;
-        var title = doc.title;
-        var id = doc.documentId;
-        appendPre(`Document "${title}" created with ID ${id}.\n`);
-        return id;
-    }, function (response) {
-        appendPre('Error (create): ' + response.result.error.message);
-    });
-}
-
-/**
- * Find or create a single document with given title.
- * Complain, if there is more than one such document.
- */
-function findOrCreateDoc(title) {
-    findDocs(title).then(function (files) {
-        if (!files.length) {
-            createDoc(title).then(function (docId) {
-                urlForm.style.display = 'block';
-                documentId = docId;
-            });
-        } else if (files.length === 1) {
-            appendPre('Using the following document for notes:');
-            printDocInfo(files);
-            urlForm.style.display = 'block';
-            documentId = files[0].id;
-        } else {
-            // Complain; too many files
-            appendPre('Error: multiple matching documents; please delete all but one:');
-            printDocInfo(files);
-            urlForm.style.display = 'none';
-        }
-    });
-}
-
-/**
- * Insert notes at the start of document (with a header for the URL).
- */
-function addNotesToDoc(event) {
-    appendPre('\nAdding notes to doc...');
-    event.preventDefault();  // Don't submit the form
-
-    // Configure AJAX requests to go through CORS Anywhere proxy
-    $.ajaxPrefilter(function (options) {
-        if (options.crossDomain && $.support.cors) {
-            options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-            options.crossDomain = false;
-        }
-    });
-
-    // Get contents of URL, and add summary into document w/ documentId
-    $.get(urlForm.url.value,
-        function (data) {
-            // $($.parseHTML(data)) is safer than $(data) with spaces, etc.
-            // context is null: use new document; keepScripts is false
-            var $data = $($.parseHTML(data, null, false));
-            var $tags = $data.find('h1, h2, h3, h4, strong, b, em, i, mark');
-
-            // Make an array of requests in reverse order, so we always
-            // insert text at the beginning and then modify its styling
-            var requests = $tags.map(function () {
-                // Squash all whitespaces, including newlines, into a single ' '
-                var tagText = this.textContent.trim().replace(/\s+/g, ' ');
-                if (!tagText) return null;  // Skip whitespace-only tagText
-
-                var itRequest = {  // InsertTextRequest
-                    insertText: {
-                        text: tagText + '\n',
-                        location: {   // No segmentId is body
-                            index: 1  // Treated as 'segmentId: ""'
-                        }
-                    }
-                };
-                var upsRequest = {  // UpdateParagraphStyleRequest
-                    updateParagraphStyle: {
-                        paragraphStyle: {
-                            // Convert H tags to corresponding Google headings
-                            namedStyleType: this.tagName[0] === 'H' ?
-                                'HEADING_' + this.tagName[1] : 'NORMAL_TEXT'
-                        },
-                        range: {
-                            startIndex: 1,  // No segmentId is body
-                            endIndex: 1     // Treated as 'segmentId: ""'
-                        },
-                        fields: "namedStyleType"
-                    }
-                };
-                if (this.tagName[0] !== 'H') {
-                    // For non-headings, set text styles
-                    var styleMap = {
-                        STRONG: 'bold', B: 'bold',
-                        EM: 'italic', I: 'italic',
-                        MARK: 'underline'
-                    };
-
-                    var utsRequest = {  // UpdateTextStyleRequest
-                        updateTextStyle: {
-                            textStyle: {
-                                [styleMap[this.tagName]]: true
-                            },
-                            range: {
-                                startIndex: 1,
-                                endIndex: tagText.length + 1
-                            },
-                            fields: styleMap[this.tagName]
-                        }
-                    };
-                    return [utsRequest, upsRequest, itRequest];
-                }
-                return [upsRequest, itRequest];  // Headings (no text-style update)
-            }).get().reverse();
-
-            // Make a batchUpdate call containing the collected requests
-            gapi.client.docs.documents.batchUpdate({
-                documentId: documentId,
-                resource: {
-                    requests: requests
-                }
-            }).then(function (response) {
-                // Clear out the URL input for next use on full success
-                // but leave for editing in case of any error
-                urlForm.url.value = '';
-                appendPre('Notes successfully added.');
-            }, function (response) {
-                appendPre('Error (batchUpdate): ' + response.result.error.message);
-            });
-        }
-    ).fail(function(jqXHR, textStatus, error) {
-        appendPre(`Error (get): ${error} (status: ${textStatus})`);
-    });
-}
-
-function toggleMenu() {
-    counter++;
-    var menu = $("#menu-links");
-    var header = $("#page-header");
-    if (counter % 2 === 1) {
-        menu.css("display", "block");
-        menu.css("animation", "1s linear slide-in");
-        header.css("display", "none");
-    } else {
-        header.css("display", "block");
-        header.css("animation", "1s linear slide-in");
-        menu.css("display", "none");
-    };
-}
-
-var linkArr = ["https://docs.google.com/document/d/15DkoQkqqjwtwyqcUKQ4jupOY6JkgPTtQq5Y_pjdPjmY/edit?tab=t.0"];
-
-function handlePwd() {
-    var inputPwd = $("#pwd").val();
-    if (inputPwd == "dk827") {
-        var gdocDiv = $("#gdoc");
-        var iframe;
-        for (var i = 0; i < linkArr.length; i++) {
-            iframe = gdocDiv.append(`<iframe src="${linkArr[i]}" class="iframe"
-                    allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>`);
-        };
-        $(".pwd").css("display","none");
-    } else {
-        $("body").append("<p>").text("Sorry, try again");
-    }
-}
+var menuCounter = 0
+var loc = window.location.href
 
 window.onload = function() {
-    if (loc.includes("?courseID=")) {
-      async function getObj() {
-        response = await (await fetch("../course-notes.json")).json();
-        objToHTML(response);
-      }
-      getObj();
-    } else if (loc.includes("course-notes") || loc.includes("apuntes-del-curso") || loc.includes("notes-des-cours")) {
-      async function getObj() {
-        response = await (await fetch("../course-notes.json")).json();
-        // search(response);
-        organizeObj(response);
-      }
-      getObj();
-    } else if (loc.includes("?recipe=")) {
-      async function getObj() {
-        response = await (await fetch("../recipes.json")).json();
-        recipeDetails(response);
-      }
-      getObj();
-    } else if (loc.includes("recipes") || loc.includes("recetas") || loc.includes("recettes")) {
-      async function getObj() {
-        response = await (await fetch("../recipes.json")).json();
-        // search(response);
-        organizeRecipes(response);
-      }
-      getObj();
-    } else if (loc.includes("index")) {
-        let files = findFiles('/images/index-gallery')
+    const gallery = new Gallery()
+    const load = new Load()
+    load.loadCaller()
+
+    if (loc.includes("index")) {
+        let files = new GetData().findFiles("/images/index-gallery")
         $("#footer").before($("<div id='gallery'></div>"))
-        gallery(files, $('#gallery'), false);
+        gallery.gallery(files, $("#gallery"))
     }
-    var sections = ["language", "menu-links", "footer"];
+    
+    var sections = ["language", "menu-links", "footer"]
     $(`.${sections[0]}`).load(`load.html #${sections[0]}`,
         function () {
             $(`.${sections[1]}`).load(`load.html #${sections[1]}`,
                 function () {
-                    $(`.${sections[2]}`).load(`load.html #${sections[2]}`, load());
-                });
-    });
-}
-
-function gallery(imgArr, gallery, links = false) {
-    let img
-    for (let i = 0; i < imgArr.length; i++) {
-        img = $("<img>")
-            .prop("src", `../${imgArr[i]}`)
-            .prop("class", "gallery")
-            .appendTo(gallery)
-            .hide()
-        if (links) img.wrap($("<a>").prop("href", `${loc}?recipe=${imgArr[i]}`))
-    }
-    let counter = 0
-    let top = gallery.offset().top - 10
-    $($(".gallery")[counter]).show();
-    $("<button id='previous'>").appendTo(gallery).text("Previous")
-        .offset({top: top, left: gallery.offset().left + 10})
-        .css('border-radius', '4px 10px')
-        .on("click", () => {
-            $($(".gallery")[counter]).hide()
-            $($(".gallery")[counter - 1]).show("slide", {direction: "left" }, 500)
-            if (counter > 0) counter--
-            else counter += imgArr.length
-        })
-    $("<button id='next'>").appendTo(gallery).text("Next")
-        .offset({top: top, left: $(window).width() - $("button").width() - 10})
-        .css('border-radius', '10px 4px')
-        .on("click", () => {
-            $($(".gallery")[counter]).hide()
-            $($(".gallery")[counter + 1]).show("slide", {direction: "right" }, 500)
-            if (counter < imgArr.length - 1) counter++
-            else counter -= imgArr.length
-        })
-    $(window).on("resize", () => {
-        $("#next").offset({left: $(window).width() - $("button").width() - 10})
+                    $(`.${sections[2]}`).load(`load.html #${sections[2]}`, load())
+                })
     })
 }
 
-function scroll() {
-    var scroller = document.getElementsByClassName("content");
-    var ratio = .25;
-    var target = scroller.scrollTop + event.deltaY * ratio;
-    scroller.scrollTo({
-        top: target,
-        behavior: "smooth"
-    });
-}
-    
-var loc = window.location.href
+function toggleMenu() {
+    menuCounter++
+    var menu = $("#menu-links")
+    var header = $("#page-header")
 
-function objToHTML(obj) {
-    var courseID = loc.slice(loc.indexOf("=") + 1, loc.length)
-    document.getElementById("main-page").style.display = "none";
-    var h1 = $("<h1>").html(courseID.toUpperCase());
-    var h3 = $("<h3>").html("Course Information")
-    var p = $("<p>").html(obj[courseID].college + ", " + obj[courseID].semester + ", " + obj[courseID].format)
-    $("#course").append(h1).append(h3).append(p);
-    if (obj[courseID].details && !obj[courseID].href) {
-        var details = $("<p>").html(obj[courseID].details)
-        $("#course").append(details);
-    } else if (obj[courseID].href) {
-        var iframe = $("<iframe>").addClass("iframe").attr("src", obj[courseID].href);
-        $("#course").append(iframe);
-    }
-}
-
-function search(response) {
-    var input = document.getElementById("course-search").value;
-    var ul = $("<ul>").appendTo($("#course"));
-    var li;
-    for (let i = 0; i < Object.keys(response).length; i++) {
-        if (Object.keys(response)[i] == input || Object.keys(response)[i].cname == input) {
-            li = $("<li>").html(response[i].cname);
-            ul.append(li);
-        }
-    }
-}
-
-function organizeObj(response) {
-    let arr = ["Fall 2023", "Spring 2024", "Fall 2024", "Spring 2025", "Fall 2025", "Winter 2026"]
-    let h3, a, r, ul, className;
-    for (let i = 0; i < arr.length; i++) {
-        className = arr[i].toLowerCase().replaceAll(" ", "-")
-        ul = $("<ul>").appendTo($("#course-columns"));
-        ul.wrap(`<div class="${className}"></div>`);
-        h3 = $("<h3>").html(arr[i]).appendTo($(`.${className}`));
-        for (let j = 0; j < Object.keys(response).length; j++) {
-            r = Object.keys(response)[j].toString();
-            if (response[r].semester == arr[i]) {
-                a = $("<a>").attr("href", loc + "?courseID=" + r)
-                    .html(response[r].cname)
-                    .appendTo($(`.${className}`));
-                a.wrap(ul).wrap("<li></li>");
-            }
-        }
-    }
-}
-
-function organizeRecipes(response) {
-    let arr = []
-    let mealData, mealName, className, a
-    for (let i = 0; i < Object.keys(response).length; i++) {
-        mealName = Object.keys(response)[i]
-        mealData = response[mealName]
-        className = mealData.type.toLowerCase().replaceAll(" ", "-")
-        if (!arr.includes(mealData.type)) {
-            arr.push(mealData.type)
-            let galleryDiv = $(`<div id='${className}-gallery'>`)
-            $("#recipe-columns").append(galleryDiv)
-            galleryDiv.prepend($("<ul>").addClass(className))
-                .prepend($("<h3>").html(`${mealData.type}`))
-            recipeGallery(response, galleryDiv, mealData.type)
-        }
-        a = $("<a>").html(mealName).attr("href", `${loc}?recipe=${mealName.toLowerCase().replaceAll(" ", "-")}`)
-        $("<li>").append(a).appendTo($(`.${className}`))
-    }
-}
-
-function recipeGallery(response, div, mealType) {
-    if (!mealType) return
-    
-    let arr = []
-    let files = findFiles('/images/recipes')
-    
-    let recipeIDs = Object.keys(response)
-    for (let i = 0; i < recipeIDs.length; i++) {
-        if (response[recipeIDs[i]].type !== mealType) continue
-        let recipeID = recipeIDs[i].toLowerCase().split(' ').join('-')
-        for (let j = 0; j < files.length; j++) {
-            if (files[j].includes(recipeID)) {
-                arr.push(files[j])
-                files.splice(j, 1)
-            }
-        }
-    }
-    if (arr.length) gallery(arr, div, true);
-}
-
-function findFiles(path) {
-    const xhr = new XMLHttpRequest()
-    xhr.open('GET', path, false)
-    xhr.send()
-    let htmlResponse, links
-    let files = []
-    if (xhr.status === 200) {
-        const parser = new DOMParser()
-        htmlResponse = parser.parseFromString(xhr.responseText, 'text/html')
-        links = htmlResponse.getElementsByTagName('a')
-        for (let i =0; i < links.length; i++) {
-            let fileName = links[i].getAttribute('href')
-            if (fileName.includes('jpg')) files.push(fileName)
-            }
-    }
-    return files
-}
-
-function recipeDetails(response) {
-    let recipeID = loc.slice(loc.indexOf("=") + 1, loc.length)
-    let recipeName = recipeID.slice(0, 1).toUpperCase() + recipeID.slice(1,recipeID.length).replaceAll("-", " ")
-    $("<h3>").html(`${recipeName} recipe`).appendTo($("#recipe"))
-    $.ajax({
-        url: `../images/${recipeID}.jpg`,
-        type: "HEAD",
-        error: function() {},
-        success: function() {
-            $("<img>").attr("src", `../images/${recipeID}.jpg`)
-                .appendTo($("#recipe"))
-        }
-    })
-    if (response[recipeName].href) {
-        let iframe = $("<iframe>").addClass("iframe").attr("src", response[recipeName].href)
-        $("#recipe").append(iframe)
+    if (menuCounter % 2 === 1) {
+        menu.css("display", "block")
+        menu.css("animation", "1s linear slide-in")
+        header.css("display", "none")
     } else {
-        $("<p>").html("Recipe coming soon!").appendTo($("#recipe"))
+        header.css("display", "block")
+        header.css("animation", "1s linear slide-in")
+        menu.css("display", "none")
     }
 }
 
-function loadHeader() {
-    var langArr, langCode, href;
-    if (loc.includes("/fr/")) langArr = ["English", "Español"]
-    else if (loc.includes("/es/")) langArr = ["English", "Français"]
-    else langArr = ["Français", "Español"]
-    var p = $("#quote").append($("<p>")).html("Read this site in:")
-    for (let l in langArr) {
-        if (l === "Español") langCode = "es/"
-        else if (l === "Français") langCode = "fr/"
-        else langCode = ""
-        href = loc.slice(0,24) + langCode + loc.slice(25, loc.length)
-        p.append($("<a>")).html(l).attr("href", href)
-    }
-}
+class Load {
+    async loadCaller() {
+        let getData = new GetData()
 
-function load() {
-    var fullLangList = ["en","fr","es"]
-    var obj = {
-        "contact" : {
-            "en" : "contact",
-            "es" : "contacto",
-            "fr" : "contact"
-        },
-        "cv" : {
-            "en" : "cv",
-            "es" : "cv",
-            "fr" : "cv"
-        },
-        "recipes" : {
-            "en" : "recipes",
-            "es" : "recetas",
-            "fr" : "recettes"
-        },
-        "index" : {
-            "en" : "index",
-            "es" : "index",
-            "fr" : "index"
-        },
-        "writings" : {
-            "en" : "writings",
-            "es" : "escritos",
-            "fr" : "écrits"
-        },
-        "course-notes" : {
-            "en" : "course-notes",
-            "es" : "apuntes-del-curso",
-            "fr" : "notes-des-cours"
+        if (loc.includes("?courseID=")) {
+            const display = new Display(await getData.getJSON("../course-notes.json"))
+            display.objToHTML()
+        } else if (loc.includes("course-notes") || loc.includes("apuntes-del-curso") || loc.includes("notes-des-cours")) {
+            const organize = new Organize(await getData.getJSON("../course-notes.json"))
+            organize.organizeObj()
+        } else if (loc.includes("?recipe=")) {
+            const display = new Display(await getData.getJSON("../recipes.json"))
+            display.recipeDetails()
+        } else if (loc.includes("recipes") || loc.includes("recetas") || loc.includes("recettes")) {
+            const organize = new Organize(await getData.getJSON("../recipes.json"))
+            organize.organizeRecipes()
         }
     }
-    var className = $("body").attr("class");
-    var currLang = loc.match(/\/..\//)[0];
-    var langList = fullLangList.filter(function (f) {return f != currLang;});
-    for (let l in langList) {
-        $(`.${langList[l]}`).attr("href", `../${langList[l]}/${obj[className][langList[l]]}.html`)
+
+    loadHeader() {
+        var langArr, langCode, href
+
+        if (loc.includes("/fr/")) langArr = ["English", "Español"]
+        else if (loc.includes("/es/")) langArr = ["English", "Français"]
+        else langArr = ["Français", "Español"]
+        
+        var p = $("#quote").append($("<p>")).html("Read this site in:")
+        
+        for (let l in langArr) {
+            if (l === "Español") langCode = "es/"
+            else if (l === "Français") langCode = "fr/"
+            else langCode = ""
+            
+            href = loc.slice(0,24) + langCode + loc.slice(25, loc.length)
+            p.append($("<a>")).html(l).attr("href", href)
+        }
     }
+
+    load() {
+        var fullLangList = ["en","fr","es"]
+        var obj = {
+            "contact" : {
+                "en" : "contact",
+                "es" : "contacto",
+                "fr" : "contact"
+            },
+            "cv" : {
+                "en" : "cv",
+                "es" : "cv",
+                "fr" : "cv"
+            },
+            "recipes" : {
+                "en" : "recipes",
+                "es" : "recetas",
+                "fr" : "recettes"
+            },
+            "index" : {
+                "en" : "index",
+                "es" : "index",
+                "fr" : "index"
+            },
+            "writings" : {
+                "en" : "writings",
+                "es" : "escritos",
+                "fr" : "écrits"
+            },
+            "course-notes" : {
+                "en" : "course-notes",
+                "es" : "apuntes-del-curso",
+                "fr" : "notes-des-cours"
+            }
+        }
+        var className = $("body").attr("class")
+        var currLang = loc.match(/\/..\//)[0]
+        var langList = fullLangList.filter(function (f) {return f != currLang})
+        
+        for (let l in langList) {
+            $(`.${langList[l]}`).attr("href", `../${langList[l]}/${obj[className][langList[l]]}.html`)
+        }
+    }
+
+}
+
+class GetData {
+    async getJSON(file) {
+        return fetch(file)
+            .then((resp) => resp.json())
+            .then((respJSON) => {return respJSON})
+    }
+
+    findFiles(path) {
+        const xhr = new XMLHttpRequest()
+        xhr.open("GET", path, false)
+        xhr.send()
+        let htmlResponse, links
+        let files = []
+        
+        if (xhr.status === 200) {
+            const parser = new DOMParser()
+            htmlResponse = parser.parseFromString(xhr.responseText, "text/html")
+            links = htmlResponse.getElementsByTagName("a")
+            for (let i =0; i < links.length; i++) {
+                let fileName = links[i].getAttribute("href")
+                if (fileName.includes("jpg")) files.push(fileName)
+            }
+        }
+        return files
+    }
+}
+
+class Gallery {
+    constructor () {
+        this.getData = new GetData()
+    }
+
+    gallery(imgArr, gallery, cat = "gallery", links = false) {
+        let img, msg
+        imgArr.push("/images/wraparound.jpg")
+        
+        for (let i = 0; i < imgArr.length; i++) {
+            img = $("<img>")
+                .prop("src", `../${imgArr[i]}`)
+                .prop("class", cat)
+                .css({"height" : "20%", "width" : "100%", "border-radius" : "30px", "padding" : "10px 0 10px 0"})
+                .appendTo(gallery)
+                .hide()
+            
+            if (links) {
+                let recipe = imgArr[i].slice(imgArr[i].lastIndexOf("/") + 1, imgArr[i].length - 4)
+                img.wrap($("<a>").prop("href", `${loc}?recipe=${recipe}`).prop("class", ".gallery-link"))
+            }
+        }
+
+        msg = $("<h4>").prop("id", "wraparound").text("More pictures coming soon!").hide()
+
+        let counter = 0
+        $($(`.${cat}`)[counter]).show()
+        
+        $("<button id='previous'>").appendTo(gallery).text("Previous")
+            .css({"border-radius" : "4px 10px", "position" : "relative"})
+            .on("click", () => {
+                $($(`.${cat}`)[counter]).hide()
+                $($(`.${cat}`)[counter - 1]).show("slide", {direction: "left" }, 500)
+                if (counter > 0) counter--
+                else counter += imgArr.length
+            })
+        
+        $("<button id='next'>").appendTo(gallery).text("Next")
+            .offset({left: $(window).width() - $("button").width() - 10})
+            .css("border-radius", "10px 4px")
+            .on("click", () => {
+                $($(`.${cat}`)[counter]).hide()
+                $($(`.${cat}`)[counter + 1]).show("slide", {direction: "right" }, 500)
+                if (counter < imgArr.length - 1) counter++
+                else counter -= imgArr.length
+            })
+
+        $(window).on("resize", () => {
+            $("#next").offset({left: $(window).width() - $("button").width() - 10})
+        })
+    }
+
+    recipeGallery(response, div, mealType) {     
+        if (!mealType) return
+        let arr = []
+        let files = this.getData.findFiles("/images/recipes")
+        let recipeIDs = Object.keys(response)
+
+        for (let i = 0; i < recipeIDs.length; i++) {
+            if (response[recipeIDs[i]].type !== mealType) continue
+            let recipeID = recipeIDs[i].toLowerCase().split(" ").join("-")
+
+            for (let j = 0; j < files.length; j++) {
+                if (files[j].includes(recipeID)) {
+                    arr.push(files[j])
+                    files.splice(j, 1)
+                }
+            }
+        }
+        if (arr.length) {
+            const gal = new Gallery()
+            gal.gallery(arr, div, `${mealType}-gallery`.toLowerCase().split(" ").join("-"), true)
+        }
+    }
+}
+
+class Organize {
+    constructor (response) {
+        this.response = response
+        this.gallery = new Gallery()
+    }
+
+    organizeObj() {
+        let arr = ["Fall 2023", "Spring 2024", "Fall 2024", "Spring 2025", "Fall 2025", "Winter 2026"]
+        let h3, a, r, ul, className
+
+        for (let i = 0; i < arr.length; i++) {
+            className = arr[i].toLowerCase().replaceAll(" ", "-")
+            ul = $("<ul>").appendTo($("#course-columns"))
+            ul.wrap(`<div class="${className}"></div>`)
+            h3 = $("<h3>").html(arr[i]).appendTo($(`.${className}`))
+
+            for (let j = 0; j < Object.keys(this.response).length; j++) {
+                r = Object.keys(this.response)[j].toString()
+
+                if (this.response[r].semester == arr[i]) {
+                    a = $("<a>").attr("href", loc + "?courseID=" + r)
+                        .html(this.response[r].cname)
+                        .appendTo($(`.${className}`))
+
+                    a.wrap(ul).wrap("<li></li>")
+                }
+            }
+        }
+    }
+
+    organizeRecipes() {
+        let arr = []
+        let mealData, mealName, className, a
+        for (let i = 0; i < Object.keys(this.response).length; i++) {
+            mealName = Object.keys(this.response)[i]
+            mealData = this.response[mealName]
+            className = mealData.type.toLowerCase().replaceAll(" ", "-")
+
+            if (!arr.includes(mealData.type)) {
+                arr.push(mealData.type)
+                let galleryDiv = $(`<div id="${className}-gallery">`)
+                $("#recipe-columns").append(galleryDiv)
+                galleryDiv.prepend($("<ul>").addClass(className))
+                    .prepend($("<h3>").html(`${mealData.type}`))
+                this.gallery.recipeGallery(this.response, galleryDiv, mealData.type)
+            }
+
+            a = $("<a>").html(mealName).attr("href", `${loc}?recipe=${mealName.toLowerCase().replaceAll(" ", "-")}`)
+            $("<li>").append(a).appendTo($(`.${className}`))
+        }
+    }
+}
+
+class Display {
+    constructor (response) {
+        this.response = response
+    }
+
+    recipeDetails() {
+        let recipeID = loc.slice(loc.indexOf("=") + 1, loc.length)
+        let recipeName = recipeID.slice(0, 1).toUpperCase() + recipeID.slice(1,recipeID.length).replaceAll("-", " ")
+        $("<h3>").html(`${recipeName} recipe`).appendTo($("#recipe"))
+        
+        $.ajax({
+            url: `../images/recipes/${recipeID}.jpg`,
+            type: "HEAD",
+            error: function() {},
+            success: function() {
+                $("<img>").attr("src", `../images/recipes/${recipeID}.jpg`)
+                    .appendTo($("#recipe"))
+            }
+        })
+
+        if (this.response[recipeName].href) {
+            let iframe = $("<iframe>").addClass("iframe").attr("src", this.response[recipeName].href)
+            $("#recipe").append(iframe)
+        } else {
+            $("<p>").html("Recipe coming soon!").appendTo($("#recipe"))
+        }
+    }
+
+    objToHTML() {
+        let courseID = loc.slice(loc.indexOf("=") + 1, loc.length)
+        document.getElementById("main-page").style.display = "none"
+        let h1 = $("<h1>").html(courseID.toUpperCase())
+        let h3 = $("<h3>").html("Course Information")
+        let p = $("<p>").html(this.response[courseID].college + ", " + this.response[courseID].semester + ", " + response[courseID].format)
+        $("#course").append(h1).append(h3).append(p)
+
+        if (this.response[courseID].details && !this.response[courseID].href) {
+            let details = $("<p>").html(this.response[courseID].details)
+            $("#course").append(details)
+        } else if (this.response[courseID].href) {
+            let iframe = $("<iframe>").addClass("iframe").attr("src", this.response[courseID].href)
+            $("#course").append(iframe)
+        }
+    }
+}
+
+class PrototypeFunctions {
+    // Not yet correctly implemented (prototypes for future addition)
+    scroll() {
+        var scroller = document.getElementsByClassName("content")
+        var ratio = .25
+        var target = scroller.scrollTop + event.deltaY * ratio
+
+        scroller.scrollTo({
+            top: target,
+            behavior: "smooth"
+        })
+    }
+
+    search(response) {
+        var input = document.getElementById("course-search").value
+        var ul = $("<ul>").appendTo($("#course"))
+        var li
+
+        for (let i = 0; i < Object.keys(response).length; i++) {
+            if (Object.keys(response)[i] == input || Object.keys(response)[i].cname == input) {
+                li = $("<li>").html(response[i].cname)
+                ul.append(li)
+            }
+        }
+    }
+}
+
+var linkArr = ["https://docs.google.com/document/d/15DkoQkqqjwtwyqcUKQ4jupOY6JkgPTtQq5Y_pjdPjmY/edit?tab=t.0"]
+
+function handlePwd() {
+    let inputPwd = $("#pwd").val()
+    if (inputPwd == "dk827") {
+        let gdocDiv = $("#gdoc")
+        let iframe
+
+        for (var i = 0; i < linkArr.length; i++) {
+            iframe = gdocDiv.append(`<iframe src="${linkArr[i]}" class="iframe"
+                    allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>`)
+        }
+
+        $(".pwd").css("display","none")
+    } else $("body").append("<p>").text("Sorry, try again")
 }
