@@ -131,6 +131,8 @@ class GetData {
     }
 
     findFiles(path) {
+        if (!loc.includes("localhost"))
+            return this.fileArray(path)
         const xhr = new XMLHttpRequest()
         xhr.open("GET", path, false)
         xhr.send()
@@ -148,6 +150,37 @@ class GetData {
         }
         return files
     }
+
+    fileArray(path) {
+        if (path.includes("recipe")) {
+            return ["/images/recipes/apple-cider-squash-mochi.jpg", "/images/recipes/cheese-stuffed-garlic-bread.jpg",
+                "/images/recipes/chicken-soup.jpg", "/images/recipes/chocolate-raspberry-cheesecake.jpg",
+                "/images/recipes/creamy-egg-and-scallion-mashed-potatoes.jpg", "/images/recipes/enchiladas.jpg",
+                "/images/recipes/five-spice-teriyaki-eggplant-rice.jpg", "/images/recipes/homemade-pasta-sauce.jpg",
+                "/images/recipes/mild-root-veggie-curry.jpg", "/images/recipes/miso-soup.jpg",
+                "/images/recipes/noodles-with-potato-vegetables-and-mozarella.jpg",
+                "/images/recipes/once-baked-potatoes.jpg", "/images/recipes/quinoa-fruit-salad.jpg",
+                "/images/recipes/refried-bean-enchiladas.jpg", "/images/recipes/shrimp-mac-and-cheese.jpg",
+                "/images/recipes/southwest-chicken-soup.jpg", "/images/recipes/stuffed-mushrooms.jpg",
+                "/images/recipes/sweet-potato-swirl-bread.jpg", "/images/recipes/tamarind-chicken-and-japanese-sweet-potatoes.jpg",
+                "/images/recipes/tamarind-lemongrass-rockfish.jpg", "/images/recipes/teriyaki-salmon-bowl.jpg",
+                "/images/recipes/things-to-do-with-salmon.jpg", "/images/recipes/turkey-burgers.jpg",
+                "/images/recipes/vanilla-custard.jpg", "/images/recipes/veggie-cheese-pasta.jpg"]
+        } else if (path.includes("index-gallery")) {
+            return ["/images/index-gallery/arches.jpg", "/images/index-gallery/canoeing.jpg",
+                "/images/index-gallery/chicago.jpg", "/images/index-gallery/dairy-show.jpg",
+                "/images/index-gallery/kitty-chair.jpg", "/images/index-gallery/kitty-closeup.jpg",
+                "/images/index-gallery/kitty-in-ash.jpg", "/images/index-gallery/kitty-paws.jpg",
+                "/images/index-gallery/lake-superior-flowers.jpg",
+                "/images/index-gallery/lake-superior-rocks.jpg", "/images/index-gallery/le-balcon.jpg",
+                "/images/index-gallery/montreal-botanical-flowers.jpg",
+                "/images/index-gallery/montreal-botanical.jpg", "/images/index-gallery/montreal.jpg",
+                "/images/index-gallery/parc-des-rapides.jpg", "/images/index-gallery/red-dress.jpg",
+                "/images/index-gallery/squash.jpg", "/images/index-gallery/st-patrick.jpg",
+                "/images/index-gallery/the-slough.jpg", "/images/index-gallery/upside-down-kitty.jpg",
+                "/images/index-gallery/wolf-puzzle.jpg"]
+        }
+    }
 }
 
 class Gallery {
@@ -156,7 +189,7 @@ class Gallery {
     }
 
     gallery(imgArr, gallery, cat = "gallery", links = false) {
-        let img, msg
+        let img
         imgArr.push("/images/wraparound.jpg")
         
         for (let i = 0; i < imgArr.length; i++) {
@@ -172,8 +205,6 @@ class Gallery {
                 img.wrap($("<a>").prop("href", `${loc}?recipe=${recipe}`).prop("class", ".gallery-link"))
             }
         }
-
-        msg = $("<h4>").prop("id", "wraparound").text("More pictures coming soon!").hide()
 
         let counter = 0
         $($(`.${cat}`)[counter]).show()
