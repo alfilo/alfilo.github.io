@@ -131,8 +131,7 @@ class GetData {
     }
 
     findFiles(path) {
-        if (!loc.includes("localhost"))
-            return this.fileArray(path)
+        if (!loc.includes("localhost")) return this.fileArray(path)
         const xhr = new XMLHttpRequest()
         xhr.open("GET", path, false)
         xhr.send()

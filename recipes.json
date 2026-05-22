@@ -307,5 +307,37 @@
     "Curry chicken rice" : {
         "type" : "Main meal",
         "href" : "https://docs.google.com/document/d/11jAMjomwOyv6j3QODiO4Sb0robfuIkWUfxlPCNnGtTY/view?usp=sharing"
+    },
+    "Lemon chicken with beans" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/13sYb4N3p-XoETh59ZCVtEPkR24ifeZfT3r9TAXHkVg4/view?usp=sharing"
+    },
+    "Fresh lemon couscous" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1aPYb1o7R-bN7NyzNuC6oDqAENpHlv6BMzfJiPxalvcQ/view?usp=sharing"
+    },
+    "Refried beans with corn salsa and rice" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1hTIM_ZD_zuvva313mkA2IKsc95AZXc-uouG-g0wd7Vc/view?usp=sharing"
+    },
+    "Stovetop meat lasagna" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1ISDURGMZFL9ohXhOj1Wk6gBqOgFkVEuc4BqJTeWH_8M/view?usp=sharing"
+    },
+    "Cheesy quick potatoes" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/144iux4NYMc9P6FA3cv8L9rciSh6oQoLgyTP7cREjHTo/view?usp=sharing"
+    },
+    "Pelmeni" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1Kpq5gw6QLMpKPs9fjB4uFaj3Z2lcStCgZQlczKi0G1g/view?usp=sharing"
+    },
+    "Spiced veggie rice" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1kkC0uypd0SIml6g39VRqdRdDfJxf7RVBlwtvkYg4HgY/view?usp=sharing"
+    },
+    "Salmon salsa plate" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/19nOB3M0VNGZ8wHPNUsfMSWq61cV1sYLrr4_pomVrX3c/view?usp=sharing"
     }
 }
