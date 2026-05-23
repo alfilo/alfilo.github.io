@@ -342,7 +342,7 @@ class Display {
         document.getElementById("main-page").style.display = "none"
         let h1 = $("<h1>").html(courseID.toUpperCase())
         let h3 = $("<h3>").html("Course Information")
-        let p = $("<p>").html(this.response[courseID].college + ", " + this.response[courseID].semester + ", " + response[courseID].format)
+        let p = $("<p>").html(this.response[courseID].college + ", " + this.response[courseID].semester + ", " + this.response[courseID].format)
         $("#course").append(h1).append(h3).append(p)
 
         if (this.response[courseID].details && !this.response[courseID].href) {
