@@ -125,7 +125,7 @@ button {
     padding: 10px 0 10px 0;
 } */
 
-hr { 
+hr {
     background-color: darkblue;
     height: 4px;
     border-radius: var(--border-rad-small);
@@ -139,12 +139,22 @@ hr {
     float: bottom;
 }
 
-@media only screen and (min-width: 500px) {
+#imgs-col img {
+    width: 100%;
+    border: 3px solid aliceblue;
+    border-radius: var(--border-rad);
+    padding: 4px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+@media only screen and (min-width: 500px) and (max-width: 799px) {
     #course-columns, #recipe-columns {
         column-count: 2;
         column-rule: 1px solid var(--border-line);
     }
 }
+
 @media only screen and (min-width: 800px) {
     #recipe img {
         width: 60%;

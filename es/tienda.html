@@ -3,21 +3,23 @@
 <html>
   <head>
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
-    <title>CV</title>
+    <title>Tienda</title>
     <meta charset="utf-8" />
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
+    <script defer src="https://code.jquery.com/ui/1.14.2/jquery-ui.min.js"></script>
     <script src="../script.js"></script>
   </head>
   <body>
     <div class="header">
         <img src="../menu.png" id="menu" onclick="toggleMenu()">
         <div id="page-header">
-            <h1>El CV de Alina</h1>
-            <p id="quote">"Inteligencia sin ambición es un pájaro sin alas."</p>
-            <!--Quote credit to Walter H. Cottingham-->
-            <p id="language">Leer este sitio en: <a href="../fr/cv.html">Français</a>
-              or <a href="../en/cv.html">English</a></p>
+            <h1>Comprar Kusudamas</h1>
+            <p id="quote">"En la artesanía, no hay errores, solamente nuevos
+                descubrimientos y creaciones únicas."</p>
+            <!--Quote credit to Justine Jenkins-->
+            <p id="language">Leer este sitio en: <a href="../fr/magasin.html">Français</a>
+              or <a href="../en/shop.html">English</a></p>
         </div>
         <div id="menu-links" style="display:none;">
             <a href="index.html">Sobre Mi</a><br>
@@ -29,11 +31,19 @@
             <a href="contacto.html">Contacto</a><br>
         </div>
     </div>
-    <div class="pdf" class="content">
-        <embed class="pdf" javascript="allow"
-            src="../alina-loginov-cv.pdf#toolbar=0&amp;navpanes=0&amp;scrollbar=0&amp;view=fitH">
-    </div>
     <pre id="content"></pre>
+    <div id="info">
+    <p>Click to buy the kusudama online.</p>
+    <h3>Delivery:</h3>
+    <p>I can deliver the kusudamas in zones A, B, and C of Montréal with an additional
+        cost and pick-up in the downtown area of Montréal is free.  If it is not possible
+        for you to do a pick-up or delivery in zones A, B, or C, please send me a message.</p>
+    <p><strong>Credit: </strong>Patterns by Prw Origami; all kusudamas made by hand by
+        Alina Loginov.</p>
+    </div>
+    <div id="imgs-row">
+      <div id="imgs-col"></div>
+    </div>
     <div id="footer"><hr><p>Copyright 2025 A<sup>2</sup>L<sub>2</sub> Designs</p></div>
   </body>
 </html>

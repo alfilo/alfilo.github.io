@@ -3,7 +3,7 @@
 <html>
   <head>
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
-    <title>Recettes</title>
+    <title>Magasin</title>
     <meta charset="utf-8" />
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
@@ -14,11 +14,13 @@
     <div class="header">
         <img src="../menu.png" id="menu" onclick="toggleMenu()">
         <div id="page-header">
-            <h1>Mes Recettes</h1>
-            <p id="quote">"La nourriture est symbolique de l'amour quand les mots sont inadéquates."</p>
-            <!--Quote credit to Alan D. Wolfelt-->
-            <p id="language">Lire cette site en: <a href="../en/recipes.html">English</a>
-              ou <a href="../es/recetas.html">Español</a></p>
+            <h1>Magasiner des Kusudamas</h1>
+            <p id="quote">"En artisanat, il n'y a pas des erreurs, seulement des nouvel decouverts
+              et créations uniques."</p>
+            <!-- In crafting, there are no mistakes, only new discoveries and unique creations. -->
+            <!--Quote credit to Justine Jenkins-->
+            <p id="language">Lire cette site en: <a href="../en/shop.html">English</a>
+              ou <a href="../es/tienda.html">Español</a></p>
         </div>
         <div id="menu-links" style="display:none;">
             <a href="index.html">Sur Moi</a><br>
@@ -30,10 +32,19 @@
             <a href="contact.html">Contact</a><br>
         </div>
     </div>
-    <div id="recipe-columns"></div>
-    <div id="recipe"></div>
     <pre id="content"></pre>
-    <h2>Galerie</h2>
+    <div id="info">
+    <p>Faites un click pour acheter un kusudama en ligne.</p>
+    <h3>Livraison:</h3>
+    <p>Je livre les kusudamas en zones A, B, et C de Montréal, avec un coût additionel.
+      Pick-up en centre-ville de Montréal est gratuit.  S'il n'est pas possible pour vous
+      à faire le pick-up ou livraison en zones A, B, ou C, svp envoyez-moi un message.</p>
+    <p><strong>Crédit: </strong>Modèles fait par Prw Origami; tous les kusudamas fait
+    par Alina Loginov à main.</p>
+    </div>
+    <div id="imgs-row">
+      <div id="imgs-col"></div>
+    </div>
     <div id="footer"><hr><p>Copyright 2025 A<sup>2</sup>L<sub>2</sub> Designs</p></div>
   </body>
 </html>

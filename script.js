@@ -56,7 +56,10 @@ class Load {
         } else if (loc.includes("recipes") || loc.includes("recetas") || loc.includes("recettes")) {
             const organize = new Organize(await getData.getJSON("../recipes.json"))
             organize.organizeRecipes()
-        }
+        } else if (loc.includes("magasin") || loc.includes("tienda") || loc.includes("shop")) {
+         const display = new Display(await getData.getJSON("../shop.json"))
+            display.displayOrigami()
+        }   
     }
 
     loadHeader() {
@@ -351,6 +354,32 @@ class Display {
         } else if (this.response[courseID].href) {
             let iframe = $("<iframe>").addClass("iframe").attr("src", this.response[courseID].href)
             $("#course").append(iframe)
+        }
+    }
+
+    displayOrigami() {
+        for (let i = 0; i < Object.keys(this.response).length; i++) {
+            let origamiName = Object.keys(this.response)[i]
+            let imgID = `../images/origami/${origamiName.split(" ").join("-").toLowerCase()}.jpg`
+            let img = $("<img>").prop("src", imgID).appendTo($("#imgs-col"))
+            img.wrap($("<a>").prop("href", this.response[origamiName]["href"]))
+
+            if ($(window).width() < 300) {
+                img.width($(window).width())
+            } else {
+                img.width(300)
+            }
+
+            $(window).on("resize", function () {
+                if ($(window).width() < 300) return
+                for (let j = 0; j < 10; j++) {
+                    console.log('resize')
+                    if ($(window).width() / j < 400 && $(window).width() / j > 300) {
+                        img.width(window.innerWidth / j)
+                        return
+                    }
+                }
+            })
         }
     }
 }
