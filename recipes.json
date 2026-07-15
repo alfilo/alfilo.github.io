@@ -339,5 +339,53 @@
     "Salmon salsa plate" : {
         "type" : "Main meal",
         "href" : "https://docs.google.com/document/d/19nOB3M0VNGZ8wHPNUsfMSWq61cV1sYLrr4_pomVrX3c/view?usp=sharing"
+    },
+    "Beet veggie salad" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1Nhvx13rNSPph_2nBRRLU727H889FzeKWXmbd6Zl7_X0/view?usp=sharing"
+    },
+    "Squid and cheese noodles" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1sn7mt3_I8Vq7i6Jl6FIte0--llXmZ2JGS9LHfAa88ng/view?usp=sharing"
+    },
+    "Caramel shortbread cookies" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1mdWpRj1aqXT-kimhXJ1inCGYsMlie6c6j18InKkvVfs/view?usp=sharing"
+    },
+    "Tarte tatin" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1P-HftuYZweisIMoEVc_J3oFKUmoSEhERvvJ7219DyXk/view?usp=sharing"
+    },
+    "Aligot with turbot and veggies" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1J0jeGtvImle2UjVkgDVT1R1iVEZV98lisq-KVVq9a4I/view?usp=sharing"
+    },
+    "Ratatouille" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1oyZGUlhY67uS21Ev5AqJucgPMkIhBtTHNb7YOtjZNks/view?usp=sharing"
+    },
+    "Spiced chicken dumplings" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1huUffWGoSsMhJiilXfT7e4bAK3xOWM8vfeGLVm5iTm8/view?usp=sharing"
+    },
+    "Barley salad" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1YXsTAkBSpOQL5On2AINA6NDe_BMw1i_j1rUsw5ufmZc/view?usp=sharing"
+    },
+    "Roasted tomato feta salmon" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1nSU0MXRZffUCxHBwcP2fviRYv6GP1gn5IjHHiZ9Kl-4/view?usp=sharing"
+    },
+    "Snake gourd curry" : {
+        "type" : "Main meal",
+        "href" : "https://docs.google.com/document/d/1hm2nUHPt-IcmeAiUUxYDhaDEqs30phB_GFZYzE9SF3s/view?usp=sharing"
+    },
+    "Glutinous coconut rice ball soup" : {
+        "type" : "Dessert",
+        "href" : "https://docs.google.com/document/d/1NvzG1EWwUsKG-czpPpH-2H8_7_XQE_gh-cAjXwUKs9I/view?usp=sharing"
+    },
+    "Spicy green beans and potatoes" : {
+        "type" : "Side",
+        "href" : "https://docs.google.com/document/d/1w1Aq3RMIhKxRWIPB252G95N_lAiWJapNH1sHb5j_ctY/view?usp=sharing"
     }
 }
