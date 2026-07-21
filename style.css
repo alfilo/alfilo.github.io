@@ -113,7 +113,7 @@ button {
 }
 
 #recipe img , #gallery {
-    width: 100%;
+    width: 60%;
     border-radius: var(--border-rad);
     padding: 10px 0 10px 0;
 }
@@ -148,6 +148,12 @@ hr {
     width: 100%;
 }
 
+@media only screen and (max-width: 500px) {
+    #recipe img {
+        width: 100%
+    }
+}
+
 @media only screen and (min-width: 500px) and (max-width: 799px) {
     #course-columns, #recipe-columns {
         column-count: 2;
@@ -157,7 +163,6 @@ hr {
 
 @media only screen and (min-width: 800px) {
     #recipe img {
-        width: 60%;
         display: block;
         margin: 0 auto 0 auto;
     }
