@@ -361,8 +361,20 @@ class Display {
         for (let i = 0; i < Object.keys(this.response).length; i++) {
             let origamiName = Object.keys(this.response)[i]
             let imgID = `../images/origami/${origamiName.split(" ").join("-").toLowerCase()}.jpg`
-            let img = $("<img>").prop("src", imgID).appendTo($("#imgs-col"))
-            img.wrap($("<a>").prop("href", this.response[origamiName]["href"]))
+            let div = $("<div>").appendTo($("#imgs-col"))
+            let img = $("<img>").prop("src", imgID).appendTo(div)
+            let p = $("<p>").text(origamiName).appendTo(div).hide()
+
+            img.on("mouseenter", function () {
+                    img.css("opacity", ".3")
+                    p.show().offset({
+                        left: $(this).offset().left + $(this).width() / 2.5,
+                        top: $(this).offset().top + $(this).height() / 2.3
+                    })
+                }).on("mouseleave", function () {
+                    img.css("opacity", "1")
+                    p.hide()
+            })
 
             if ($(window).width() < 300) {
                 img.width($(window).width())
@@ -373,7 +385,6 @@ class Display {
             $(window).on("resize", function () {
                 if ($(window).width() < 300) return
                 for (let j = 0; j < 10; j++) {
-                    console.log('resize')
                     if ($(window).width() / j < 400 && $(window).width() / j > 300) {
                         img.width(window.innerWidth / j)
                         return
@@ -387,19 +398,20 @@ class Display {
 class PrototypeFunctions {
     // Not yet correctly implemented (prototypes for future addition)
     scroll() {
-        var scroller = document.getElementsByClassName("content")
-        var ratio = .25
-        var target = scroller.scrollTop + event.deltaY * ratio
+        $(window).on("scroll", function () {
+            var scroller = document.getElementsByClassName("content")
+            var target = scroller.scrollTop + event.deltaY * .25
 
-        scroller.scrollTo({
-            top: target,
-            behavior: "smooth"
+            scroller.scrollTo({
+                top: target,
+                behavior: "smooth"
+            })
         })
     }
 
     search(response) {
-        var input = document.getElementById("course-search").value
-        var ul = $("<ul>").appendTo($("#course"))
+        var input = document.getElementById("site-search").value
+        var ul = $("<ul>").appendTo($("#site-search"))
         var li
 
         for (let i = 0; i < Object.keys(response).length; i++) {
