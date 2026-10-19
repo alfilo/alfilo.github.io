@@ -59,7 +59,10 @@ class Load {
         } else if (loc.includes("magasin") || loc.includes("tienda") || loc.includes("shop")) {
          const display = new Display(await getData.getJSON("../shop.json"))
             display.displayOrigami()
-        }   
+        } else if (loc.includes("blog")) {
+            const display = new Display(await getData.getJSON("../blog.json"))
+            display.displayBlog()
+        }
     }
 
     loadHeader() {
@@ -113,6 +116,15 @@ class Load {
                 "en" : "course-notes",
                 "es" : "apuntes-del-curso",
                 "fr" : "notes-des-cours"
+            },
+            "shop" : {
+                "en" : "shop",
+                "es" : "tienda",
+                "fr" : "magasin"
+            },
+            "blog" : {
+                "en" : "blog",
+                "fr" : "blog"
             }
         }
         var className = $("body").attr("class")
@@ -390,6 +402,35 @@ class Display {
                         return
                     }
                 }
+            })
+        }
+    }
+
+    displayBlog() {
+        for (let i = 0; i < Object.keys(this.response).length; i++) {
+            let div = $("<div>").appendTo($("#blog-entries"))
+            let blogDate = Object.keys(this.response)[i]
+            let entry = this.response[Object.keys(this.response)[i]]
+            let h3 = $("<h3>").text(blogDate + '\u3000\u300B').addClass("blog-dropdown").appendTo(div)
+            for (let j = 0; j < entry.body.length; j++) {
+                let item = entry.body[j]
+                if (item.includes("photo")) {
+                    console.log(entry[item])
+                    let img = $("<img>").attr("src", entry[item].href).appendTo(div)
+                    if (entry[item].wrap) img.addClass("blog-img-wrap")
+                    else img.addClass("blog-img")
+                } else if (item.includes("note")) {
+                    $("<p>").text(entry[item]).addClass("note").appendTo(div)
+                } else {
+                    $("<p>").text(item).appendTo(div)
+                }
+            }
+            let k = 0
+            h3.siblings().hide()
+            h3.on("click", function () {
+                if (k % 2) $(this).siblings().hide()
+                else $(this).siblings().show()
+                k++
             })
         }
     }

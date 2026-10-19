@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../style.css">
+<html>
+  <head>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <title>Blog</title>
+    <meta charset="utf-8" />
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="../script.js"></script>
+  </head>
+  <body>
+    <div class="header">
+        <img src="../menu.png" id="menu" onclick="toggleMenu()">
+        <div id="page-header">
+            <h1>My Blog</h1>
+            <p id="quote">"The brain is the organ of destiny. It holds within its humming
+              mechanism secrets that will determine the future ..."</p>
+            <!--Quote credit to Wilder Penfield-->
+        </div>
+        <div id="menu-links" style="display:none;">
+            <a href="index.html">About</a><br>
+            <a href="cv.html">CV</a><br>
+            <a href="course-notes.html">Course Notes</a><br>
+            <a href="writings.html">Writings</a><br>
+            <a href="recipes.html">Recipes</a><br>
+            <a href="blog.html">Blog</a><br>
+            <a href="shop.html">Shop</a><br>
+            <a href="contact.html">Contact</a><br>
+        </div>
+    </div>
+    <div id="blog-entries"></div>
+    <pre id="content"></pre>
+    <div id="footer"><hr><p>Copyright 2025 A<sup>2</sup>L<sub>2</sub> Designs</p></div>
+  </body>
+</html>
